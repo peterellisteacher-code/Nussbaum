@@ -1,0 +1,2343 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emotional Knowledge — Martha Nussbaum | Stage 2 Philosophy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ── Design tokens ─────────────────────────────────────── */
+:root {
+  --navy:          #1B2A4A;
+  --navy-light:    #2D4070;
+  --navy-hover:    #162238;
+  --amber:         #C68B2A;
+  --amber-light:   #E5A93A;
+  --amber-bg:      #FEF8EC;
+  --amber-border:  #E8C97B;
+  --cream:         #F8F4ED;
+  --cream-dark:    #EDE8DF;
+  --charcoal:      #1E1E1E;
+  --body-text:     #2C2C2C;
+  --mid-grey:      #6B6B6B;
+  --light-grey:    #D4D0C8;
+  --divider:       #E2DDD5;
+  --success:       #2D6A4F;
+  --success-bg:    #D8F3DC;
+  --error:         #9B2226;
+  --error-bg:      #FFE8E8;
+
+  --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-sans:  'Inter', system-ui, -apple-system, sans-serif;
+
+  --text-sm:   14px;
+  --text-base: 18px;
+  --text-lg:   22px;
+  --text-xl:   28px;
+  --text-2xl:  38px;
+  --text-3xl:  52px;
+
+  --space-xs:  8px;
+  --space-sm:  16px;
+  --space-md:  24px;
+  --space-lg:  32px;
+  --space-xl:  48px;
+  --space-2xl: 64px;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --shadow-sm: 0 1px 3px rgba(27,42,74,0.08);
+  --shadow-md: 0 4px 16px rgba(27,42,74,0.12);
+  --transition: 0.2s ease;
+}
+
+/* ── Reset ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  color: var(--body-text);
+  background: var(--cream);
+  min-height: 100vh;
+  line-height: 1.65;
+}
+img { display: block; width: 100%; height: auto; }
+button { cursor: pointer; font-family: var(--font-sans); }
+textarea, input { font-family: var(--font-sans); }
+a { color: var(--navy); }
+a:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+
+/* ── Skip link ─────────────────────────────────────────── */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: var(--space-sm);
+  background: var(--navy);
+  color: #fff;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  z-index: 1000;
+  text-decoration: none;
+}
+.skip-link:focus { top: var(--space-sm); }
+
+/* ── SR only ────────────────────────────────────────────── */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── Site header ───────────────────────────────────────── */
+.site-header {
+  background: var(--navy);
+  color: #fff;
+  padding: var(--space-sm) var(--space-xl);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-md);
+}
+.site-header h1 {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #fff;
+}
+.site-header h1 em { color: var(--amber-light); font-style: italic; }
+.unit-label {
+  font-size: var(--text-sm);
+  opacity: 0.65;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.progress-dots {
+  display: flex;
+  gap: var(--space-xs);
+  align-items: center;
+}
+.progress-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+  border: 2px solid transparent;
+  transition: var(--transition);
+}
+.progress-dot.active {
+  background: var(--amber-light);
+  border-color: var(--amber-light);
+}
+.progress-dot.completed {
+  background: rgba(255,255,255,0.7);
+  border-color: rgba(255,255,255,0.7);
+}
+
+/* ── Layout ─────────────────────────────────────────────── */
+.layout {
+  display: flex;
+  align-items: flex-start;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+/* ── Main content panel ─────────────────────────────────── */
+.main-content {
+  flex: 1;
+  min-width: 0;
+  padding: var(--space-xl) var(--space-2xl) var(--space-xl) var(--space-xl);
+  border-right: 1px solid var(--divider);
+  min-height: calc(100vh - 64px);
+}
+
+/* ── Level hero ─────────────────────────────────────────── */
+.level-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  background: var(--amber-bg);
+  border: 1px solid var(--amber-border);
+  color: var(--navy);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 4px var(--space-sm);
+  border-radius: 40px;
+  margin-bottom: var(--space-md);
+}
+.level-title {
+  font-family: var(--font-serif);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.2;
+  margin-bottom: var(--space-xs);
+}
+.level-subtitle {
+  font-size: var(--text-lg);
+  color: var(--mid-grey);
+  font-style: italic;
+  font-family: var(--font-serif);
+  margin-bottom: var(--space-lg);
+}
+.level-image {
+  width: 100%;
+  max-height: 280px;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-xl);
+  box-shadow: var(--shadow-md);
+}
+
+/* ── Content prose ───────────────────────────────────────── */
+.content-body { max-width: 680px; }
+.content-body h2 {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  color: var(--navy);
+  margin: var(--space-xl) 0 var(--space-sm);
+  border-left: 4px solid var(--amber);
+  padding-left: var(--space-sm);
+}
+.content-body h3 {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  color: var(--navy);
+  margin: var(--space-lg) 0 var(--space-xs);
+}
+.content-body p { margin-bottom: var(--space-sm); }
+.content-body ul, .content-body ol {
+  margin: var(--space-sm) 0 var(--space-sm) var(--space-lg);
+}
+.content-body li { margin-bottom: var(--space-xs); }
+
+.key-term {
+  background: var(--amber-bg);
+  border: 1px solid var(--amber-border);
+  border-radius: var(--radius-sm);
+  padding: 1px 6px;
+  font-weight: 500;
+  color: var(--navy);
+}
+.quotation {
+  border-left: 4px solid var(--amber);
+  margin: var(--space-md) 0;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--amber-bg);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-style: italic;
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  color: var(--navy);
+}
+.quotation cite {
+  display: block;
+  margin-top: var(--space-xs);
+  font-style: normal;
+  font-size: var(--text-sm);
+  color: var(--mid-grey);
+  font-family: var(--font-sans);
+}
+.objection-box {
+  background: #EEF2FF;
+  border: 1px solid #C7D2FE;
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  margin: var(--space-md) 0;
+}
+.objection-box strong { color: var(--navy); }
+.callout {
+  background: var(--cream-dark);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  margin: var(--space-md) 0;
+  border: 1px solid var(--divider);
+}
+.callout .callout-label {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--mid-grey);
+  margin-bottom: var(--space-xs);
+}
+
+/* ── Activity zone ───────────────────────────────────────── */
+.activity-zone {
+  margin-top: var(--space-2xl);
+  background: #fff;
+  border: 1px solid var(--divider);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  box-shadow: var(--shadow-sm);
+}
+.activity-header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+.activity-icon {
+  background: var(--navy);
+  color: #fff;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-lg);
+  flex-shrink: 0;
+}
+.activity-header h2 {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  color: var(--navy);
+  margin: 0 0 4px;
+  border: none;
+  padding: 0;
+}
+.activity-header p { color: var(--mid-grey); font-size: var(--text-base); }
+
+/* ── Buttons ─────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 12px var(--space-md);
+  border-radius: var(--radius-md);
+  font-size: var(--text-base);
+  font-weight: 600;
+  border: 2px solid transparent;
+  transition: var(--transition);
+  text-decoration: none;
+  line-height: 1;
+  min-height: 44px;
+}
+.btn:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+.btn-primary {
+  background: var(--navy);
+  color: #fff;
+}
+.btn-primary:hover { background: var(--navy-hover); }
+.btn-primary:disabled { opacity: 0.45; cursor: default; }
+.btn-amber {
+  background: var(--amber);
+  color: #fff;
+}
+.btn-amber:hover { background: var(--amber-light); }
+.btn-outline {
+  background: transparent;
+  color: var(--navy);
+  border-color: var(--navy);
+}
+.btn-outline:hover { background: var(--cream-dark); }
+.btn-sm { padding: 8px var(--space-sm); font-size: var(--text-sm); min-height: 36px; }
+
+/* ── Quote classifier (Level 1 activity) ─────────────────── */
+.claim-card {
+  background: var(--cream);
+  border: 2px solid var(--divider);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+.claim-card blockquote {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  color: var(--navy);
+  font-style: italic;
+  margin-bottom: var(--space-sm);
+}
+.claim-card cite { font-size: var(--text-sm); color: var(--mid-grey); display: block; }
+.claim-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-top: var(--space-sm);
+}
+.claim-option-btn {
+  padding: 8px var(--space-sm);
+  border-radius: 40px;
+  border: 2px solid var(--light-grey);
+  background: #fff;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--body-text);
+  transition: var(--transition);
+  min-height: 36px;
+}
+.claim-option-btn:hover { border-color: var(--navy); color: var(--navy); }
+.claim-option-btn.selected-correct {
+  background: var(--success-bg);
+  border-color: var(--success);
+  color: var(--success);
+}
+.claim-option-btn.selected-wrong {
+  background: var(--error-bg);
+  border-color: var(--error);
+  color: var(--error);
+}
+.claim-option-btn:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+.claim-feedback {
+  margin-top: var(--space-sm);
+  padding: var(--space-sm);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  display: none;
+}
+.claim-feedback.correct { background: var(--success-bg); color: var(--success); }
+.claim-feedback.wrong { background: var(--error-bg); color: var(--error); }
+.claim-feedback.show { display: block; }
+
+/* ── Zone sort (Level 2 activity) ────────────────────────── */
+.sort-pool {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+  min-height: 80px;
+  padding: var(--space-sm);
+  border: 2px dashed var(--light-grey);
+  border-radius: var(--radius-md);
+}
+.sort-zones {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+.sort-zone {
+  min-height: 120px;
+  border: 2px solid var(--light-grey);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm);
+  background: #fff;
+  transition: var(--transition);
+}
+.sort-zone.zone-active { border-color: var(--amber); background: var(--amber-bg); }
+.sort-zone-label {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--mid-grey);
+  margin-bottom: var(--space-xs);
+  text-align: center;
+}
+.sort-card {
+  background: var(--navy);
+  color: #fff;
+  padding: 8px var(--space-sm);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  user-select: none;
+  transition: var(--transition);
+  margin-bottom: var(--space-xs);
+  border: 2px solid transparent;
+  min-height: 36px;
+}
+.sort-card:hover { background: var(--navy-light); }
+.sort-card.card-selected {
+  border-color: var(--amber-light);
+  outline: 3px solid var(--amber);
+}
+.sort-card:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+.sort-card.correct-placed { background: var(--success); }
+.sort-card.wrong-placed { background: var(--error); }
+
+/* ── Argument builder (Level 3 activity) ─────────────────── */
+.arg-cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+.arg-card {
+  background: #fff;
+  border: 2px solid var(--divider);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-md);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  transition: var(--transition);
+  cursor: pointer;
+}
+.arg-card:hover { border-color: var(--navy); box-shadow: var(--shadow-sm); }
+.arg-card.arg-selected { border-color: var(--amber); background: var(--amber-bg); }
+.arg-card.arg-correct { border-color: var(--success); background: var(--success-bg); }
+.arg-card.arg-wrong { border-color: var(--error); background: var(--error-bg); }
+.arg-card:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+.arg-number {
+  width: 32px;
+  height: 32px;
+  background: var(--cream-dark);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: var(--text-sm);
+  flex-shrink: 0;
+  color: var(--navy);
+}
+.arg-number.active { background: var(--amber); color: #fff; }
+
+/* ── Path scenario (Level 4 activity) ────────────────────── */
+.path-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+.path-card {
+  border: 2px solid var(--divider);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: var(--transition);
+}
+.path-card-header {
+  padding: var(--space-sm) var(--space-md);
+  font-weight: 600;
+  font-size: var(--text-sm);
+}
+.path-a .path-card-header { background: #EEF2FF; color: #3730A3; }
+.path-b .path-card-header { background: var(--amber-bg); color: var(--amber); }
+.path-card-body { padding: var(--space-md); font-size: var(--text-sm); }
+.path-question {
+  margin-top: var(--space-md);
+  background: var(--cream-dark);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+}
+.path-question p { font-weight: 600; margin-bottom: var(--space-sm); }
+.path-radio-group { display: flex; flex-direction: column; gap: var(--space-xs); }
+.path-radio-label {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  cursor: pointer;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  border: 2px solid transparent;
+  transition: var(--transition);
+  font-size: var(--text-sm);
+}
+.path-radio-label:hover { background: var(--cream-dark); }
+.path-radio-label input[type="radio"] { margin-top: 2px; flex-shrink: 0; }
+.path-radio-label.path-correct { background: var(--success-bg); border-color: var(--success); color: var(--success); }
+.path-radio-label.path-wrong { background: var(--error-bg); border-color: var(--error); color: var(--error); }
+
+/* ── Claim matcher (Level 5 activity) ────────────────────── */
+.matcher-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid var(--divider);
+}
+.matcher-item:last-child { border-bottom: none; }
+.matcher-claim { flex: 1; font-size: var(--text-sm); }
+.matcher-options {
+  display: flex;
+  gap: var(--space-xs);
+  flex-shrink: 0;
+}
+.matcher-btn {
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: 40px;
+  border: 2px solid var(--light-grey);
+  background: #fff;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--mid-grey);
+  transition: var(--transition);
+  min-height: 36px;
+}
+.matcher-btn:hover { border-color: var(--navy); color: var(--navy); }
+.matcher-btn.selected { background: var(--navy); color: #fff; border-color: var(--navy); }
+.matcher-btn.correct-final { background: var(--success); color: #fff; border-color: var(--success); }
+.matcher-btn.wrong-final { background: var(--error); color: #fff; border-color: var(--error); }
+.matcher-btn:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+
+/* ── Dialectical exchange (Level 6 activity) ─────────────── */
+.plato-objection {
+  background: #EEF2FF;
+  border: 1px solid #C7D2FE;
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+.plato-objection .voice-label {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #4338CA;
+  margin-bottom: var(--space-sm);
+}
+.reply-options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+.reply-option {
+  border: 2px solid var(--divider);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  cursor: pointer;
+  transition: var(--transition);
+  background: #fff;
+  text-align: left;
+  width: 100%;
+  font-size: var(--text-sm);
+}
+.reply-option:hover { border-color: var(--navy); }
+.reply-option.reply-selected { border-color: var(--amber); background: var(--amber-bg); }
+.reply-option.reply-best { border-color: var(--success); background: var(--success-bg); }
+.reply-option.reply-not-best { border-color: var(--error-bg); opacity: 0.7; }
+.reply-option:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+.reply-label { font-weight: 600; color: var(--navy); margin-bottom: var(--space-xs); }
+
+.synthesis-area {
+  background: var(--cream-dark);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+}
+.synthesis-area h3 { font-family: var(--font-serif); color: var(--navy); margin-bottom: var(--space-sm); }
+.synthesis-area p { font-size: var(--text-sm); color: var(--mid-grey); margin-bottom: var(--space-sm); }
+.synthesis-textarea {
+  width: 100%;
+  min-height: 140px;
+  padding: var(--space-sm);
+  border: 2px solid var(--light-grey);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-base);
+  resize: vertical;
+  background: #fff;
+  color: var(--body-text);
+  line-height: 1.65;
+  transition: var(--transition);
+}
+.synthesis-textarea:focus { outline: none; border-color: var(--navy); }
+.word-count { font-size: var(--text-sm); color: var(--mid-grey); margin-top: var(--space-xs); }
+.word-count.target { color: var(--success); }
+
+/* ── Activity score ───────────────────────────────────────── */
+.activity-score {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+  margin-top: var(--space-md);
+  display: none;
+}
+.activity-score.show { display: flex; }
+.activity-score.good { background: var(--success-bg); color: var(--success); }
+.activity-score.partial { background: var(--amber-bg); color: var(--amber); }
+.activity-score .score-num {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  font-family: var(--font-serif);
+}
+
+/* ── Level navigation ─────────────────────────────────────── */
+.level-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-xl) 0 var(--space-2xl);
+  max-width: 680px;
+  margin-top: var(--space-xl);
+  gap: var(--space-md);
+}
+.level-nav-info {
+  text-align: center;
+  font-size: var(--text-sm);
+  color: var(--mid-grey);
+}
+.level-nav-info strong { color: var(--navy); display: block; }
+
+/* ── Socratic panel ───────────────────────────────────────── */
+.socratic-panel {
+  width: 380px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 64px;
+  height: calc(100vh - 64px);
+  display: flex;
+  flex-direction: column;
+  background: var(--navy);
+  color: #fff;
+  overflow: hidden;
+}
+
+.panel-header {
+  padding: var(--space-md) var(--space-md) var(--space-sm);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  flex-shrink: 0;
+}
+.panel-header h2 {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  color: #fff;
+  margin-bottom: 2px;
+}
+.panel-context {
+  font-size: var(--text-sm);
+  color: var(--amber-light);
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  scroll-behavior: smooth;
+}
+.chat-messages::-webkit-scrollbar { width: 4px; }
+.chat-messages::-webkit-scrollbar-track { background: transparent; }
+.chat-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 2px; }
+
+.chat-msg {
+  max-width: 92%;
+  border-radius: var(--radius-md);
+  padding: var(--space-sm);
+  font-size: var(--text-base);
+  line-height: 1.5;
+  animation: fadeUp 0.25s ease;
+}
+.chat-msg.tutor {
+  background: rgba(255,255,255,0.12);
+  border-left: 3px solid var(--amber);
+  align-self: flex-start;
+}
+.chat-msg.student {
+  background: var(--amber);
+  color: #fff;
+  align-self: flex-end;
+  border-left: none;
+}
+.chat-msg.system-msg {
+  background: rgba(255,255,255,0.06);
+  font-size: var(--text-sm);
+  color: rgba(255,255,255,0.6);
+  align-self: center;
+  text-align: center;
+  font-style: italic;
+  border-radius: var(--radius-sm);
+}
+.chat-msg.thinking {
+  background: rgba(255,255,255,0.08);
+  align-self: flex-start;
+  color: rgba(255,255,255,0.5);
+  font-size: var(--text-sm);
+  font-style: italic;
+}
+.typing-indicator span {
+  display: inline-block;
+  animation: blink 1.2s infinite;
+}
+.typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+.typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes blink {
+  0%, 80%, 100% { opacity: 0.2; }
+  40% { opacity: 1; }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.chat-offline-notice {
+  padding: var(--space-sm);
+  background: rgba(198, 139, 42, 0.2);
+  border: 1px solid var(--amber);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  color: var(--amber-light);
+  line-height: 1.4;
+}
+
+.chat-form {
+  padding: var(--space-sm) var(--space-md);
+  border-top: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  flex-shrink: 0;
+}
+.chat-textarea {
+  width: 100%;
+  padding: var(--space-xs) var(--space-sm);
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: var(--radius-sm);
+  color: #fff;
+  font-size: var(--text-base);
+  resize: none;
+  line-height: 1.5;
+  min-height: 68px;
+  transition: var(--transition);
+}
+.chat-textarea::placeholder { color: rgba(255,255,255,0.4); }
+.chat-textarea:focus { outline: none; border-color: var(--amber); }
+.chat-send {
+  align-self: flex-end;
+  padding: var(--space-xs) var(--space-md);
+  background: #fff;
+  color: var(--navy);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: var(--text-sm);
+  min-height: 36px;
+  transition: var(--transition);
+}
+.chat-send:hover { background: var(--amber-bg); color: var(--navy-hover); }
+.chat-send:disabled { opacity: 0.5; cursor: default; }
+.chat-send:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+
+/* ── Activity progress bar ────────────────────────────────── */
+.activity-progress {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+  font-size: var(--text-sm);
+  color: var(--mid-grey);
+}
+.progress-bar {
+  flex: 1;
+  height: 6px;
+  background: var(--cream-dark);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--amber);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+/* ── Feedback panel ───────────────────────────────────────── */
+.feedback-panel {
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  margin-top: var(--space-md);
+  display: none;
+}
+.feedback-panel.show { display: block; }
+.feedback-panel.correct { background: var(--success-bg); border: 1px solid var(--success); }
+.feedback-panel.partial { background: var(--amber-bg); border: 1px solid var(--amber-border); }
+.feedback-panel h4 {
+  font-family: var(--font-serif);
+  color: var(--navy);
+  margin-bottom: var(--space-xs);
+}
+.feedback-panel p { font-size: var(--text-sm); }
+
+/* ── AI probe box ─────────────────────────────────────────── */
+.ai-probe {
+  background: linear-gradient(135deg, var(--navy), var(--navy-light));
+  color: #fff;
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  margin-top: var(--space-lg);
+}
+.ai-probe .probe-label {
+  font-size: var(--text-sm);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--amber-light);
+  font-weight: 600;
+  margin-bottom: var(--space-xs);
+}
+.ai-probe p { font-size: var(--text-sm); line-height: 1.6; }
+
+/* ── Table ────────────────────────────────────────────────── */
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--space-md) 0;
+  font-size: var(--text-sm);
+}
+.comparison-table th {
+  background: var(--navy);
+  color: #fff;
+  padding: var(--space-sm);
+  text-align: left;
+  font-weight: 600;
+}
+.comparison-table td {
+  padding: var(--space-sm);
+  border-bottom: 1px solid var(--divider);
+  vertical-align: top;
+}
+.comparison-table tr:nth-child(even) td { background: var(--cream-dark); }
+
+/* ── Utility classes (replaces inline styles) ─────────────── */
+.u-help-text {
+  font-size: var(--text-sm);
+  color: var(--mid-grey);
+  margin-bottom: var(--space-sm);
+}
+.u-section-label {
+  font-weight: 600;
+  margin-bottom: var(--space-sm);
+  font-size: var(--text-sm);
+}
+.u-action-row {
+  display: flex;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+.u-action-row-lg {
+  display: flex;
+  gap: var(--space-sm);
+  margin-top: var(--space-lg);
+}
+.u-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+.u-mb-md { margin-bottom: var(--space-md); }
+.u-mb-lg { margin-bottom: var(--space-lg); }
+.u-mt-md { margin-top: var(--space-md); }
+.u-mt-sm { margin-top: var(--space-sm); }
+.u-bold { font-weight: 600; }
+.u-italic-mid {
+  color: var(--mid-grey);
+  font-style: italic;
+}
+.arg-slot-empty {
+  border-style: dashed;
+  opacity: 0.6;
+  cursor: pointer;
+}
+.arg-slot-empty .slot-label {
+  color: var(--mid-grey);
+  font-style: italic;
+}
+.arg-slot-filled .slot-label {
+  color: var(--body-text);
+  font-style: normal;
+}
+.dialectic-heading {
+  font-family: var(--font-serif);
+  color: var(--navy);
+  margin-bottom: var(--space-sm);
+}
+
+/* ── Reduced motion ───────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── Narrow viewport reflow (SC 1.4.10) ───────────────────── */
+@media (max-width: 900px) {
+  .layout {
+    flex-direction: column;
+  }
+  .socratic-panel {
+    width: 100%;
+    height: auto;
+    position: static;
+    max-height: 60vh;
+    border-top: 4px solid var(--amber);
+  }
+  .main-content {
+    padding: var(--space-md);
+    border-right: none;
+    border-bottom: 1px solid var(--divider);
+  }
+  .site-header {
+    padding: var(--space-sm) var(--space-md);
+    flex-wrap: wrap;
+  }
+  .site-header h1 { font-size: var(--text-lg); }
+  .level-title { font-size: var(--text-xl); }
+  .level-image { max-height: 180px; }
+  .sort-zones { grid-template-columns: 1fr; }
+  .path-grid { grid-template-columns: 1fr; }
+  .u-grid-2 { grid-template-columns: 1fr; }
+  .comparison-table { font-size: var(--text-sm); }
+  .comparison-table th, .comparison-table td { padding: var(--space-xs); }
+  .matcher-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+</style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- ── Site header ───────────────────────────────────────── -->
+<header class="site-header" role="banner">
+  <div>
+    <p class="unit-label">Stage 2 Philosophy · Ways of Knowing</p>
+    <h1><em>Emotional Knowledge</em> — Martha Nussbaum</h1>
+  </div>
+  <nav aria-label="Level progress">
+    <div class="progress-dots" id="progress-dots" role="list">
+      <div class="progress-dot active" role="listitem" aria-label="Level 1: current"></div>
+      <div class="progress-dot" role="listitem" aria-label="Level 2"></div>
+      <div class="progress-dot" role="listitem" aria-label="Level 3"></div>
+      <div class="progress-dot" role="listitem" aria-label="Level 4"></div>
+      <div class="progress-dot" role="listitem" aria-label="Level 5"></div>
+      <div class="progress-dot" role="listitem" aria-label="Level 6"></div>
+    </div>
+  </nav>
+</header>
+
+<!-- ── Main layout ───────────────────────────────────────── -->
+<div class="layout" role="main">
+
+  <!-- Left: Level content -->
+  <div class="main-content" id="main-content">
+    <div id="level-container">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+
+  <!-- Right: Socratic panel (always visible) -->
+  <aside class="socratic-panel" aria-label="Socratic Tutor">
+    <div class="panel-header">
+      <h2>Socratic Dialogue</h2>
+      <p class="panel-context" id="panel-context">Ask me anything about this level.</p>
+    </div>
+
+    <div class="chat-messages" id="chat-messages" aria-live="polite" aria-label="Conversation, scrollable" tabindex="0" role="log">
+      <!-- Messages added by JS -->
+    </div>
+
+    <form class="chat-form" id="chat-form" aria-label="Send message to tutor">
+      <label for="chat-textarea" class="sr-only">Your question or response</label>
+      <textarea
+        class="chat-textarea"
+        id="chat-textarea"
+        placeholder="Ask a question, share your thinking, or test an idea…"
+        rows="3"
+        aria-required="true"
+      ></textarea>
+      <button type="submit" class="chat-send" id="chat-send" aria-label="Send message">
+        Send →
+      </button>
+    </form>
+  </aside>
+
+</div>
+
+<!-- Screen reader live region for activity feedback -->
+<div id="sr-live" aria-live="assertive" aria-atomic="true" class="sr-only"></div>
+
+<!-- ─────────────────────────────────────────────────────── -->
+<!-- LEVEL DATA AND APPLICATION LOGIC                        -->
+<!-- ─────────────────────────────────────────────────────── -->
+<script>
+'use strict';
+
+// ── Level data ───────────────────────────────────────────
+const LEVELS = {
+
+  1: {
+    id: 1,
+    badge: 'Level 1 of 6',
+    title: 'The Rationalist Challenge',
+    subtitle: 'Why does the Western philosophical tradition distrust emotion as a source of knowledge?',
+    image: 'images/level1-plato.jpg',
+    imageAlt: 'Plato\'s chariot allegory — the charioteer controlling the two horses of reason and passion',
+    panelContext: 'We\'re examining Plato\'s case against emotional knowledge. Push yourself to name the exact epistemic problem — not just "emotions are unreliable," but WHY they fail his specific standard for knowledge.',
+    panelOpener: 'Plato thinks emotions obstruct knowledge. Before we see why — what do YOU think? Is there anything you know because of a feeling you had, that you couldn\'t have known without it?',
+    content: `
+      <h2>The Problem Nussbaum is Responding To</h2>
+      <p>Before we can understand what Nussbaum is arguing, we need to understand what she is arguing <em>against</em>. That tradition begins with Plato.</p>
+
+      <h3>Plato's Charioteer</h3>
+      <p>In the <em>Phaedrus</em>, Plato describes the soul as a chariot pulled by two horses. One horse is noble — representing reason. The other is dark and unruly — representing appetite and emotion. The charioteer (reason) must control the dark horse to steer toward truth and the eternal Forms.</p>
+
+      <p>This is not just a metaphor for self-control. It encodes a specific <span class="key-term">epistemic claim</span>: genuine knowledge requires access to <em>universal, eternal Forms</em> — the real essences of things. The Beautiful, the Just, the True. Emotions, by contrast, tie us to particular, changing, subjective experience. They belong to the realm of appearance, not reality.</p>
+
+      <h3>Plato's Epistemological Case</h3>
+      <p>Plato's objection to emotion as knowledge has several interlocking parts. Each is important for your essay:</p>
+      <ol>
+        <li><strong>Particularity:</strong> Emotions respond to this person, this situation, right now. Knowledge must be universal — applicable across all cases.</li>
+        <li><strong>Instability:</strong> My emotional responses change over time and differ from yours. Knowledge must be stable and inter-subjectively valid.</li>
+        <li><strong>Non-justifiability:</strong> I cannot give rational justification for my grief in the way I can prove a geometric theorem. Knowledge requires justification.</li>
+        <li><strong>Susceptibility:</strong> Emotions can be manipulated — a skilled orator or advertiser can produce the "right" feeling without producing truth. This makes them unreliable guides.</li>
+      </ol>
+
+      <div class="objection-box">
+        <strong>Plato's verdict on Nussbaum (in advance):</strong><br>
+        <em>"What she calls 'emotional knowledge' is not true knowledge — it is affect, not justified true belief. The grieving person may respond to genuine loss, but their response does not constitute knowledge of the Form of goodness or justice. It is an opinion at best."</em>
+      </div>
+
+      <h3>Why This Matters for Your Essay</h3>
+      <p>Nussbaum's entire project is a reply to this tradition. If you are going to write on Prompts 2 or 3, you need to be able to articulate Plato's objection precisely — so you can show Nussbaum's response to it.</p>
+
+      <div class="ai-probe">
+        <p class="probe-label">🤖 AI Probe</p>
+        <p>Could an AI system have Platonic knowledge of the Forms? It processes universal rules, not particular emotional responses. Does that mean it knows more than we do — or does it miss something?</p>
+      </div>
+    `,
+    activityTitle: 'Claim Analyser',
+    activityIcon: '🔍',
+    activityDesc: 'For each statement below, decide whether it supports the view that emotion obstructs knowledge, challenges it, or is about something else. Read carefully — the distinctions matter.',
+    activityType: 'classifier',
+    activityData: [
+      {
+        quote: "A detached scientist who removes personal feelings from their observations will understand the subject more objectively.",
+        source: "Common assumption in scientific methodology",
+        answer: "obstructs",
+        label: "Obstructs knowledge",
+        explanation: "Correct. This claim assumes emotional detachment produces better knowledge — which is exactly the rationalist position Nussbaum is challenging. The word 'objectively' encodes the assumption that emotion distorts."
+      },
+      {
+        quote: "The expert teacher doesn't just know the subject — they feel the difficulty their students experience, and that feeling makes them a better teacher of it.",
+        source: "Pedagogical observation",
+        answer: "supports",
+        label: "Supports emotional knowledge",
+        explanation: "Correct. This suggests that emotional access — feeling the student's difficulty — provides epistemic access to something (what it's like to struggle) that purely technical knowledge misses."
+      },
+      {
+        quote: "Grief reveals the true value of what we've lost in a way that no rational inventory could capture.",
+        source: "Phenomenological observation",
+        answer: "supports",
+        label: "Supports emotional knowledge",
+        explanation: "Correct — and this is close to Nussbaum's own view. Grief discloses value. It tells us something real about the worth of what is lost. This is an emotional response functioning as epistemic access."
+      },
+      {
+        quote: "Our gut reactions to moral situations are unreliable guides to truth — they shift with culture and mood.",
+        source: "Sceptical challenge",
+        answer: "obstructs",
+        label: "Obstructs knowledge",
+        explanation: "Correct. This is a version of the instability/variability objection. Because emotional responses shift with culture and context, they cannot provide stable, reliable knowledge."
+      },
+      {
+        quote: "A judge who feels anger at a defendant is more likely to give a harsher sentence than the evidence warrants.",
+        source: "Empirical psychology research",
+        answer: "obstructs",
+        label: "Obstructs knowledge",
+        explanation: "Correct. This is empirical evidence for the rationalist position — emotion (anger) distorts judgment (sentencing) away from the evidence. This is the kind of case Siegel's 'hijacked experience' would later theorise."
+      }
+    ]
+  },
+
+  2: {
+    id: 2,
+    badge: 'Level 2 of 6',
+    title: 'Hume\'s Empiricist Twist',
+    subtitle: '"Reason is, and ought only to be, the slave of the passions."',
+    image: 'images/level2-hume.jpg',
+    imageAlt: 'Abstract illustration of Hume\'s passions as large amber currents with reason as a small blue flame',
+    panelContext: 'The key question here is the difference between Hume and Nussbaum. Both give emotion an important role — but is it the same role? Push students to name exactly what Hume thinks emotions DO, and whether that is the same as being a form of knowledge.',
+    panelOpener: 'Hume says reason is the slave of the passions. Nussbaum says emotions ARE a form of knowledge. Are these the same claim? What\'s the difference — if there is one?',
+    content: `
+      <h2>Not All Defences of Emotion Are the Same</h2>
+      <p>It would be easy to assume that Hume and Nussbaum are making similar arguments — both give emotion an important role against the rationalist tradition. But the difference between their positions is philosophically precise, and getting it wrong will cost you marks in your essay.</p>
+
+      <h3>Hume's Empiricism</h3>
+      <p>David Hume (1711–1776) argued that reason alone cannot motivate action. If I know that exercise is good for my health, that piece of knowledge by itself gives me no reason to exercise. What gets me off the couch is a <em>desire</em> — a passion. Reason tells me <em>how</em> to achieve what I want. It cannot tell me <em>what</em> to want.</p>
+
+      <p>This is Hume's famous claim: <span class="key-term">reason is the slave of the passions</span>. It is a claim about <strong>function</strong> — about what emotions do in our practical reasoning. They supply the ends; reason supplies the means.</p>
+
+      <h3>What Hume is NOT Saying</h3>
+      <p>Crucially, Hume is not claiming that passions are themselves a form of <em>knowledge</em>. He is claiming they are <em>motivators</em>. The passion of compassion motivates me to help others; but Hume does not say that compassion gives me epistemic access to the nature of suffering that reason cannot.</p>
+
+      <h3>Why Nussbaum Goes Further</h3>
+      <p>Nussbaum's claim is stronger and more philosophically radical. She argues that emotions do not merely motivate — they <em>cognise</em>. They have propositional content. They constitute a form of thought. This is why she calls them <span class="key-term">emotion-cognitions</span>: they are not just pushes toward action, they are ways of perceiving and understanding situations.</p>
+
+      <table class="comparison-table">
+        <thead>
+          <tr><th>Question</th><th>Hume</th><th>Nussbaum</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Do emotions motivate action?</td><td>Yes — this is their primary role</td><td>Yes — but that is not their only role</td></tr>
+          <tr><td>Do emotions constitute knowledge?</td><td>No — they are not cognitive</td><td>Yes — they are a form of thought with propositional content</td></tr>
+          <tr><td>Can emotions be true or false?</td><td>Emotions are neither — they are impulses</td><td>Yes — they track real features of situations</td></tr>
+          <tr><td>Is reason superior to emotion?</td><td>No — reason serves passion</td><td>Neither is superior — they are both cognitive</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout">
+        <p class="callout-label">Essay tip</p>
+        <p>If you use Hume in your essay, be clear about what he is and is not claiming. He is useful for showing that the Western tradition's dismissal of emotion is contested — but he does not make Nussbaum's specific claim about emotion as epistemic capacity. Confusing the two will read as imprecise philosophical analysis.</p>
+      </div>
+
+      <div class="ai-probe">
+        <p class="probe-label">🤖 AI Probe</p>
+        <p>Does an AI have Humean passions? It optimises toward outputs — is that like having desires? But can it be said to <em>want</em> anything? And does Hume's picture of motivation even apply to systems with no survival needs?</p>
+      </div>
+    `,
+    activityTitle: 'Three-Zone Sort',
+    activityIcon: '📦',
+    activityDesc: 'Sort each claim into the correct zone. Select a card from the pool, then click the zone where it belongs. You can change your mind by clicking a placed card to return it.',
+    activityType: 'sort',
+    activityData: {
+      zones: [
+        { id: 'obstructs', label: 'Emotion OBSTRUCTS reason' },
+        { id: 'motivates', label: 'Emotion MOTIVATES action (Hume)' },
+        { id: 'cognises', label: 'Emotion IS knowledge (Nussbaum)' }
+      ],
+      cards: [
+        { id: 'c1', text: 'Grief reveals the true depth of what we have lost — a fact invisible to detached analysis.', correct: 'cognises' },
+        { id: 'c2', text: 'Fear of failure drives students to study harder than reason alone would.', correct: 'motivates' },
+        { id: 'c3', text: 'Panic in an emergency causes people to make worse decisions than calm analysis would.', correct: 'obstructs' },
+        { id: 'c4', text: 'The doctor who feels something about her patient\'s suffering perceives the situation more accurately than the detached one.', correct: 'cognises' },
+        { id: 'c5', text: 'Love gives us compelling reasons to help the people we care about.', correct: 'motivates' },
+        { id: 'c6', text: 'Romantic infatuation distorts our judgment of potential partners\' actual qualities.', correct: 'obstructs' },
+        { id: 'c7', text: 'Anger at injustice motivates political engagement and social change.', correct: 'motivates' },
+        { id: 'c8', text: 'Cultivated compassion gives us genuine epistemic access to others\' situations.', correct: 'cognises' }
+      ]
+    }
+  },
+
+  3: {
+    id: 3,
+    badge: 'Level 3 of 6',
+    title: 'Nussbaum\'s Core Claim',
+    subtitle: 'Emotions are not obstacles to thought. They are a form of thought.',
+    image: 'images/level3-nussbaum.jpg',
+    imageAlt: 'Abstract illustration of a mind in which emotions and thoughts form one interconnected network',
+    panelContext: 'Students are working through the concept of emotion-cognitions. The key philosophical move is propositional content — push them to explain why it matters that emotions can be true or false, not just felt.',
+    panelOpener: 'Nussbaum says emotions are "thoughts to which strong commitment is attached." What does it mean for a thought to have "propositional content"? And why does that matter for whether emotion can be knowledge?',
+    content: `
+      <h2>The Central Philosophical Move</h2>
+      <p>Nussbaum's most important philosophical move is deceptively simple: she argues that the traditional reason/emotion dichotomy is built on a false picture of what emotions <em>are</em>.</p>
+
+      <p>The traditional picture: emotions are non-cognitive events that happen to us — we feel fear, or anger, or grief, like a kind of weather in the body. Reason then arrives to assess the situation properly.</p>
+
+      <p>Nussbaum's picture: emotions are themselves <em>cognitive</em>. They are evaluative judgments about what matters to us.</p>
+
+      <h3>Emotion-Cognitions</h3>
+      <p>Nussbaum calls emotions <span class="key-term">emotion-cognitions</span>: "thoughts to which a strong sense of commitment is attached." This is not saying emotions <em>contain</em> a cognitive component alongside the feeling. It is saying that the emotion <em>is</em> the thought.</p>
+
+      <p>Consider fear. When I feel fear, I am not just having a bodily sensation of alarm plus a separate belief that danger is present. The fear itself is the perception that something threatening is happening to something I value. The structure of fear is: <em>"I fear that X will harm Y, where Y matters to me."</em></p>
+
+      <h3>Propositional Content — Why It Matters</h3>
+      <p>Philosophers call this <span class="key-term">propositional content</span>: the emotion is <em>about</em> something, and that aboutness has the structure of a proposition (a claim that can be true or false).</p>
+
+      <p>This is the decisive move. If emotions have propositional content, then:</p>
+      <ol>
+        <li>They can be <strong>accurate or inaccurate</strong> — they can track real features of situations, or they can distort them.</li>
+        <li>They can be <strong>justified or unjustified</strong> — some emotional responses are warranted by the situation, others are not.</li>
+        <li>They can constitute <strong>knowledge</strong> — if an emotion accurately tracks a real feature of a situation, it is a form of epistemic access to that feature.</li>
+      </ol>
+
+      <div class="quotation">
+        "Emotions are not just the push of desire and the pull of pain, but forms of evaluative judgment that recognise value in persons and things outside ourselves."
+        <cite>— Nussbaum, <em>Upheavals of Thought</em></cite>
+      </div>
+
+      <h3>The Reason/Emotion Dichotomy Dismantled</h3>
+      <p>If emotions are a form of thought, then dismissing them as "merely emotional" is not more rigorous than dismissing any other kind of thought — it is a category error. The question is not whether to trust reason or emotion, but which emotional responses (like which beliefs) are <em>well-founded</em>.</p>
+
+      <div class="ai-probe">
+        <p class="probe-label">🤖 AI Probe</p>
+        <p>Could an AI have emotion-cognitions? It produces outputs with propositional content. But does it have the "strong sense of commitment" Nussbaum requires? What would it mean for an AI to be genuinely <em>committed</em> to a claim, not just to generate it?</p>
+      </div>
+    `,
+    activityTitle: 'Argument Builder',
+    activityIcon: '🧩',
+    activityDesc: 'The six cards below are steps in Nussbaum\'s argument for emotion-cognitions, but they\'re in the wrong order. Click a card to select it, then click the numbered slot where it belongs.',
+    activityType: 'argbuilder',
+    activityData: {
+      slots: 6,
+      cards: [
+        {
+          id: 'a1',
+          text: 'Emotions are not mere sensations — they involve evaluative judgments about what matters.',
+          correctSlot: 1,
+          hint: 'This is the starting premise — the foundational claim about what emotions are.'
+        },
+        {
+          id: 'a2',
+          text: 'If emotions involve judgments, they have propositional content: "I fear that X is dangerous to Y."',
+          correctSlot: 2,
+          hint: 'This follows from the first premise: judgments have the logical structure of propositions.'
+        },
+        {
+          id: 'a3',
+          text: 'Propositions can be true or false — so emotional responses can be accurate or inaccurate.',
+          correctSlot: 3,
+          hint: 'This is the crucial step: propositional structure allows for truth and falsity.'
+        },
+        {
+          id: 'a4',
+          text: 'Emotional responses trained through close attention to particulars become more accurate over time.',
+          correctSlot: 4,
+          hint: 'This is Nussbaum\'s claim about cultivation — not all emotions are equally reliable, but they can be improved.'
+        },
+        {
+          id: 'a5',
+          text: 'Therefore, well-trained emotional perception is a reliable form of epistemic access to human situations.',
+          correctSlot: 5,
+          hint: 'This is the epistemological conclusion: trained emotion = knowledge.'
+        },
+        {
+          id: 'a6',
+          text: 'A person without this emotional training is literally blind to features of situations that matter.',
+          correctSlot: 6,
+          hint: 'This is the negative corollary: emotional absence = epistemic failure, not neutrality.'
+        }
+      ]
+    }
+  },
+
+  4: {
+    id: 4,
+    badge: 'Level 4 of 6',
+    title: 'Narrative Imagination',
+    subtitle: 'How does engagement with literature constitute an epistemic capacity?',
+    image: 'images/level4-narrative.jpg',
+    imageAlt: 'An open book from which human figures emerge, reaching toward each other across worlds',
+    panelContext: 'Students have just explored two approaches to a scenario. Push them to identify what KIND of knowledge narrative engagement provides — not just "more empathy" but specifically what the engaged observer knows that the detached one doesn\'t, and how that knowledge was acquired.',
+    panelOpener: 'After exploring the two paths — what exactly did the narratively engaged observer KNOW that the detached one didn\'t? Was it different information, or a different mode of access to the same reality?',
+    content: `
+      <h2>Literature as an Epistemic Tool</h2>
+      <p>Nussbaum's most striking claim — and the one hardest to dismiss as "merely" ethical — is that engagement with literature is a form of <em>epistemic</em> practice. It does not just make us kinder. It makes us better <em>knowers</em>.</p>
+
+      <h3>The Case of Henry James</h3>
+      <p>Nussbaum draws extensively on the novels of Henry James. James's fiction demands a particular quality of attention from the reader — what Nussbaum calls being <span class="key-term">finely aware and richly responsible</span>. This is not just careful reading. It is a form of moral and cognitive perception.</p>
+
+      <div class="quotation">
+        "Moral knowledge, James suggests, is not simply intellectual grasp of particular facts; it is not even simply intellectual grasp of particular facts; it is <em>perception</em>… It is seeing a complex, concrete reality in a highly lucid and richly responsive way; it is taking in what is there, with imagination and feeling."
+        <cite>— Nussbaum, <em>Love's Knowledge</em>, p.152</cite>
+      </div>
+
+      <h3>The Epistemic Danger of Detachment</h3>
+      <p>Nussbaum argues that emotional detachment is not epistemically neutral — it is a form of <em>blindness</em>. Someone who "cuts off emotion" to achieve objectivity does not see more clearly; they become unable to perceive certain features of situations that are only visible to emotionally engaged attention.</p>
+
+      <div class="quotation">
+        "If you are going to see life as it is, you have to be willing to be perplexed, to see its mystery and complexity; consoling simplification brings dullness of vision."
+        <cite>— Nussbaum, <em>Love's Knowledge</em>, p.207</cite>
+      </div>
+
+      <p>And from the character in Henry James she cites approvingly:</p>
+
+      <div class="quotation">
+        "There are mysteries you can't see into unless you happen to have a little decent human feeling."
+        <cite>— Henry James, <em>The Princess Casamassima</em>, cited by Nussbaum</cite>
+      </div>
+
+      <h3>Narrative Imagination as Reliability</h3>
+      <p>Nussbaum's epistemological claim is <em>reliabilist</em>: a cognitive process is a source of knowledge if it reliably produces true beliefs. She argues that trained narrative imagination — the capacity to imaginatively inhabit another person's situation — reliably produces true beliefs about human experience, suffering, and value that detached analysis cannot access.</p>
+
+      <div class="ai-probe">
+        <p class="probe-label">🤖 AI Probe</p>
+        <p>AI has processed enormous amounts of literature — it has "read" more Henry James than any human. Does this give it narrative imagination? Or is Nussbaum's epistemic capacity about something that requires genuine vulnerability and attachment — something an AI cannot have?</p>
+      </div>
+    `,
+    activityTitle: 'Two-Path Scenario',
+    activityIcon: '🚶',
+    activityDesc: 'Read through two different approaches to the same situation. Then answer the questions about what each observer knew and what they missed.',
+    activityType: 'paths',
+    activityData: {
+      scenario: 'Two philosophy students volunteer at a homeless shelter on the same night. They encounter the same man: James, 52, who has been sleeping rough for eight months.',
+      paths: [
+        {
+          id: 'path-a',
+          label: 'Observer A — Clinical Distance',
+          description: 'A approaches the task like a sociologist. They note the relevant statistics: James is 52, in the demographic most at risk. He cites job loss and a relationship breakdown as causes. A records this information accurately. They feel professionally engaged but deliberately hold emotional distance, believing this produces more objective understanding. At the end of the night, A has a clear, accurate factual profile of James\'s situation.',
+          questions: [
+            {
+              id: 'q1a',
+              text: 'What did Observer A genuinely know at the end of the night?',
+              options: [
+                { text: 'The causal factors behind James\'s homelessness', correct: true },
+                { text: 'What it is like to be James, in that situation', correct: false },
+                { text: 'The statistical pattern James\'s case fits', correct: true },
+                { text: 'The particular value of what James has lost', correct: false }
+              ]
+            }
+          ]
+        },
+        {
+          id: 'path-b',
+          label: 'Observer B — Narrative Engagement',
+          description: 'B sits with James for longer than they planned. They notice how he holds his coffee cup — carefully, precisely, like someone who once worked with his hands. They learn he was a carpenter. They feel something shift when he describes showing his daughter how to build a bookshelf. B leaves with fewer statistics noted. But they understand something about the particular human cost of what happened to James — the loss of craft, of the role of "father who teaches," of a specific dignity — that no demographic data could have communicated.',
+          questions: [
+            {
+              id: 'q1b',
+              text: 'What did Observer B know that Observer A didn\'t?',
+              options: [
+                { text: 'The statistical causes of James\'s homelessness', correct: false },
+                { text: 'The particular, concrete human value of what James lost', correct: true },
+                { text: 'What it feels like to be in a specific kind of loss', correct: true },
+                { text: 'James\'s age and demographic profile', correct: false }
+              ]
+            }
+          ]
+        }
+      ],
+      synthesis: 'What does this scenario suggest about the relationship between emotional engagement and knowledge? Use Nussbaum\'s term "moral perception" in your answer.'
+    }
+  },
+
+  5: {
+    id: 5,
+    badge: 'Level 5 of 6',
+    title: 'Haidt\'s Empirical Floor',
+    subtitle: 'How does moral psychology support Nussbaum — and how does it differ from her?',
+    image: 'images/level5-haidt.jpg',
+    imageAlt: 'A wise elephant and a scholarly rider working as partners — Haidt\'s social intuitionist model',
+    panelContext: 'CRITICAL — students must not frame Haidt and Nussbaum as opposed. Push them to see the composite picture: Haidt maps how intuitions actually work; Nussbaum asks how they can be made more reliable. Both treat emotion as cognitive/informational.',
+    panelOpener: 'Haidt says intuitions get there first and are reliable. Nussbaum says cultivated emotion gives us better knowledge. Are these claims in conflict? Or do they need each other?',
+    content: `
+      <h2>Haidt is Not Nussbaum's Opponent</h2>
+
+      <div class="callout">
+        <p class="callout-label">⚠ Critical framing note</p>
+        <p>A very common essay error is to set up Haidt and Nussbaum as opposing each other — as if Haidt's "emotion gets there first" somehow challenges Nussbaum's view. <strong>This is wrong.</strong> Both thinkers treat emotion as cognitively informative. They are building a composite picture together. Framing them as opponents will cost you marks.</p>
+      </div>
+
+      <h3>Haidt's Social Intuitionist Model</h3>
+      <p>Jonathan Haidt's research in moral psychology found that when people make moral judgments, their intuitive responses arrive <em>before</em> their conscious reasoning — and that the reasoning often functions as post-hoc rationalisation of what they already felt.</p>
+
+      <p>His famous image: the <span class="key-term">elephant and the rider</span>. The elephant is our moral intuition — fast, powerful, largely pre-conscious. The rider (reason) sits on top, thinks they are in charge, but mostly follows where the elephant goes. When the rider can't find a reason to support what the elephant wants to do, it finds one, or invents one.</p>
+
+      <p>Crucially, Haidt does not say the elephant is stupid. He says intuitions evolved to solve real adaptive problems and are generally reliable within the cultural contexts in which they operate. The elephant has its own intelligence.</p>
+
+      <h3>What Haidt Establishes (the floor)</h3>
+      <p>Haidt provides the empirical baseline that Nussbaum needs:</p>
+      <ul>
+        <li>Emotional/intuitive responses are <em>informative</em>, not merely motivating</li>
+        <li>Dismissing them as "irrational noise" is a mistake — they track real moral features</li>
+        <li>Reason is not the primary engine of moral judgment</li>
+      </ul>
+
+      <h3>What Nussbaum Adds (the training question)</h3>
+      <p>Nussbaum accepts Haidt's empirical picture and asks a philosophical question he does not: <em>can the elephant be trained?</em></p>
+
+      <p>Haidt says intuitions change slowly through social and cultural evolution. Nussbaum says there is a mechanism for deliberately refining them: <em>disciplined attentive engagement with literature and the particulars of human situations</em>. This is why literature matters epistemically — not as moral instruction, but as a training mechanism for perceptual accuracy.</p>
+
+      <table class="comparison-table">
+        <thead>
+          <tr><th></th><th>Haidt</th><th>Nussbaum</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Is emotion cognitive?</td><td>Yes — intuitions are informational</td><td>Yes — emotion-cognitions have propositional content</td></tr>
+          <tr><td>Does reasoning override intuition?</td><td>Rarely, in isolation</td><td>Not by overriding — by refining</td></tr>
+          <tr><td>What changes intuitions?</td><td>Slow cultural/social evolution</td><td>Disciplined attentive practice (literature)</td></tr>
+          <tr><td>Primary method</td><td>Empirical psychology</td><td>Philosophical analysis + literary criticism</td></tr>
+        </tbody>
+      </table>
+
+      <div class="ai-probe">
+        <p class="probe-label">🤖 AI Probe</p>
+        <p>Does AI have an "elephant"? Its outputs emerge from trained pattern-matching that precedes conscious reasoning — which sounds Haidtian. But Haidt's elephant evolved in social groups with survival stakes. Can the same concept apply to a system with no stakes, no vulnerability, no survival?</p>
+      </div>
+    `,
+    activityTitle: 'Claim Matcher',
+    activityIcon: '🎯',
+    activityDesc: 'For each philosophical claim, decide whether it belongs to Haidt, Nussbaum, or both. Select your answer for each claim, then check your results.',
+    activityType: 'matcher',
+    activityData: [
+      { id: 'm1', claim: 'Moral intuitions arrive before conscious reasoning and are informationally rich.', answer: 'Haidt', options: ['Haidt', 'Nussbaum', 'Both'], explanation: 'This is Haidt\'s specific psychological finding from the SIM — the elephant gets there first.' },
+      { id: 'm2', claim: 'Emotional responses can be made more reliable through disciplined attentive practice.', answer: 'Nussbaum', options: ['Haidt', 'Nussbaum', 'Both'], explanation: 'Nussbaum\'s distinctive claim: literature and attentive practice train perceptual accuracy. Haidt thinks change is slower and more cultural.' },
+      { id: 'm3', claim: 'Treating moral emotions as mere irrational noise is a philosophical mistake.', answer: 'Both', options: ['Haidt', 'Nussbaum', 'Both'], explanation: 'Both thinkers reject the dismissal of emotion. Haidt on empirical grounds; Nussbaum on philosophical grounds.' },
+      { id: 'm4', claim: 'The "rider" of reason mostly serves the "elephant" of intuition rather than controlling it.', answer: 'Haidt', options: ['Haidt', 'Nussbaum', 'Both'], explanation: 'This is Haidt\'s specific metaphor — the elephant and rider image is his.' },
+      { id: 'm5', claim: 'Literature is a mechanism for cultivating more accurate emotional perception.', answer: 'Nussbaum', options: ['Haidt', 'Nussbaum', 'Both'], explanation: 'Literature as epistemic training mechanism is Nussbaum\'s specific argument — not Haidt\'s.' },
+      { id: 'm6', claim: 'Emotional responses to moral situations are cognitively informative, not merely motivational.', answer: 'Both', options: ['Haidt', 'Nussbaum', 'Both'], explanation: 'Both argue this — though for different reasons and with different mechanisms.' },
+      { id: 'm7', claim: 'Moral judgment changes primarily through slow social and cultural evolution, not individual practice.', answer: 'Haidt', options: ['Haidt', 'Nussbaum', 'Both'], explanation: 'This is Haidt\'s view on how intuitions change — through group-level social processes, not individual cultivation.' },
+      { id: 'm8', claim: 'Imaginative engagement with fictional particulars trains our perceptual capacities.', answer: 'Nussbaum', options: ['Haidt', 'Nussbaum', 'Both'], explanation: 'The fictional particulars argument is distinctively Nussbaum — connecting epistemology to literary criticism.' }
+    ]
+  },
+
+  6: {
+    id: 6,
+    badge: 'Level 6 of 6',
+    title: 'The Live Objection',
+    subtitle: 'Plato returns: can Nussbaum\'s emotional knowledge meet the standard of justified true belief?',
+    image: 'images/level6-dialectic.jpg',
+    imageAlt: 'Two philosophical figures in debate — the rationalist and the empiricist — with a glowing question between them',
+    panelContext: 'This is synthesis level — students are building the full dialectical argument for their essay. Help them construct Nussbaum\'s precise reply to the JTB objection. Push for philosophical precision: can emotion-cognitions be justified? True? Belief-like? This is essay-preparation territory.',
+    panelOpener: 'You\'ve built the case for Nussbaum. Now Plato\'s back with his strongest objection. Before you read it — what do you predict he\'ll say? And what\'s Nussbaum\'s best reply?',
+    content: `
+      <h2>The Dialectical Structure</h2>
+      <p>Your Issues Analysis essay requires argument → objection → reply. This final level gives you the full dialectical exchange you need to write on Prompts 2 or 3.</p>
+
+      <h3>Position: Nussbaum's Claim</h3>
+      <p>Emotions are not obstacles to knowledge but a form of epistemic access. As emotion-cognitions with propositional content, they can be accurate or inaccurate, justified or unjustified. Trained through literature and attentive practice, they give us reliable knowledge of human situations that detached analysis cannot access. The person without cultivated emotional perception is <em>blind</em> to real features of reality — detachment produces ignorance, not clarity.</p>
+
+      <h3>Objection: Plato's Reply</h3>
+
+      <div class="plato-objection">
+        <p class="voice-label">Plato's Objection</p>
+        <p>"What Nussbaum calls 'emotional knowledge' fails the standard test for genuine knowledge — justified true belief (JTB). Consider three problems:</p>
+        <p>First, emotional responses vary from person to person and culture to culture. My grief is not your grief; my compassion is not yours. If knowledge must be inter-subjectively valid — that is, capable of being shared and checked — then private emotional responses cannot constitute it.</p>
+        <p>Second, emotions cannot be rationally justified in the way beliefs can. I can give reasons for a mathematical claim; I cannot give reasons for my grief beyond 'I feel it.' Nussbaum has shown emotions involve thought, but she has not shown they can meet the justification requirement.</p>
+        <p>Third, and most damaging: even if some emotional responses are accurate, there is no reliable method for distinguishing the accurate ones from the distorted ones. How do I know whether my compassion is tracking real suffering or merely projecting my own anxieties? Without a method of verification, we do not have knowledge — we have belief, at best."</p>
+      </div>
+
+      <h3>The Dialectical Task</h3>
+      <p>Below, you will assess three possible replies Nussbaum could make. Your task: identify the strongest one, and explain why.</p>
+
+      <div class="ai-probe">
+        <p class="probe-label">🤖 AI Probe</p>
+        <p>Plato's objection about verification applies doubly to AI: if an AI system produces an "emotional" response, we have no reliable method for checking whether it tracks anything real. Does this mean AI knowledge is structurally worse than human emotional knowledge — or does it show that Plato's verification problem applies to all knowledge, not just emotional knowledge?</p>
+      </div>
+    `,
+    activityTitle: 'Dialectical Exchange + Synthesis',
+    activityIcon: '⚖',
+    activityDesc: 'Part A: Select the strongest reply Nussbaum could make to Plato\'s objection. Part B: Write a 100–150 word synthesis paragraph using the dialectical structure your essay requires.',
+    activityType: 'dialectic',
+    activityData: {
+      replies: [
+        {
+          id: 'r1',
+          label: 'Reply A',
+          text: 'Plato\'s criterion of justified true belief is too narrow. Many things we consider genuine knowledge — perceptual knowledge, testimonial knowledge, knowledge-how — do not straightforwardly meet the JTB standard as Plato applies it. Rejecting emotional knowledge on this basis is arbitrary unless we apply the same standard consistently to all knowledge sources.',
+          quality: 'partial',
+          explanation: 'This is a reasonable defensive move — challenging the adequacy of Plato\'s framework. But it doesn\'t directly answer his three specific challenges about variability, justification, and verification. It leaves Nussbaum\'s position undefended on the specific terrain Plato has chosen.'
+        },
+        {
+          id: 'r2',
+          label: 'Reply B — Strongest',
+          text: 'Nussbaum can meet Plato on his own terms. Emotion-cognitions CAN be justified (through training, coherence with other responses, and accuracy of perception over time), CAN be true (they track real features of situations — grief accurately registers real loss), and ARE belief-like states with propositional content. Plato\'s objection shows that some emotional responses are unreliable — not that emotional responses cannot in principle constitute knowledge. We do not reject perception as a knowledge source because some perceptions are illusory; we refine our perceptual practices. The same applies to emotional perception.',
+          quality: 'best',
+          explanation: 'This is the strongest reply because it accepts Plato\'s framework (JTB) and shows emotion-cognitions CAN satisfy it. It also turns his variability objection against him: we don\'t reject perception because some perceptions are wrong — we develop methods for distinguishing reliable from unreliable perception. The same method (training, practice, coherence checking) applies to emotional cognition.'
+        },
+        {
+          id: 'r3',
+          label: 'Reply C',
+          text: 'Plato\'s objection confuses unreliable or uncultivated emotions with emotions as such. Of course some emotional responses are distorted — jealousy, prejudice, panic. But this is equally true of other knowledge sources. Some perceptions are illusory; some memories are false; some intuitions are biased. We do not reject these sources entirely — we identify conditions under which they are reliable. Nussbaum\'s claim is about cultivated emotional perception under appropriate conditions.',
+          quality: 'partial',
+          explanation: 'This is a good partial response — it correctly distinguishes uncultivated from cultivated emotion, and correctly applies the "unreliable instances don\'t refute the source" move. But it doesn\'t directly answer the justification question: HOW does one justify an emotional response? Reply B addresses this more fully.'
+        }
+      ],
+      synthesisPrompt: 'Write a 100–150 word dialectical paragraph using this structure: Nussbaum argues that [claim]. Plato objects that [objection]. However, Nussbaum can reply that [reply]. Therefore [synthesis/conclusion about what this debate reveals about the nature of knowledge].'
+    }
+  }
+
+};
+
+// ── Application state ────────────────────────────────────
+let currentLevel = 1;
+let chatHistory = [];
+let serverOnline = false;
+let activityState = {};
+
+// ── Check server health ──────────────────────────────────
+async function checkServer() {
+  try {
+    const r = await fetch('http://localhost:3000/api/health', { signal: AbortSignal.timeout(2000) });
+    serverOnline = r.ok;
+  } catch {
+    serverOnline = false;
+  }
+  renderPanel();
+}
+
+// ── DOM helpers ──────────────────────────────────────────
+const $ = id => document.getElementById(id);
+function announce(msg) {
+  const el = $('sr-live');
+  el.textContent = '';
+  setTimeout(() => { el.textContent = msg; }, 50);
+}
+
+// ── Render level ─────────────────────────────────────────
+function renderLevel(id) {
+  const level = LEVELS[id];
+  if (!level) return;
+  currentLevel = id;
+
+  // Update progress dots
+  document.querySelectorAll('.progress-dot').forEach((dot, i) => {
+    dot.classList.remove('active', 'completed');
+    if (i + 1 === id) dot.classList.add('active');
+    else if (i + 1 < id) dot.classList.add('completed');
+    dot.setAttribute('aria-label', `Level ${i+1}${i+1 === id ? ': current' : i+1 < id ? ': completed' : ''}`);
+  });
+
+  // Update panel context
+  $('panel-context').textContent = level.panelContext;
+
+  // Build level HTML
+  const container = $('level-container');
+  container.innerHTML = `
+    <div class="level-badge" aria-label="${level.badge}">${level.badge}</div>
+    <h2 class="level-title" id="level-heading" tabindex="-1">${level.title}</h2>
+    <p class="level-subtitle">${level.subtitle}</p>
+    <img class="level-image" src="${level.image}" alt="${level.imageAlt}" width="1200" height="280" loading="lazy">
+
+    <div class="content-body">
+      ${level.content}
+    </div>
+
+    <section class="activity-zone" aria-labelledby="activity-heading">
+      <div class="activity-header">
+        <div class="activity-icon" aria-hidden="true">${level.activityIcon}</div>
+        <div>
+          <h2 id="activity-heading">${level.activityTitle}</h2>
+          <p>${level.activityDesc}</p>
+        </div>
+      </div>
+      <div id="activity-content">
+        ${buildActivity(level)}
+      </div>
+    </section>
+
+    <nav class="level-nav" aria-label="Navigate between levels">
+      <button class="btn btn-outline" id="prev-btn" ${id === 1 ? 'disabled aria-disabled="true"' : ''}>
+        ← Previous
+      </button>
+      <div class="level-nav-info">
+        <strong>Level ${id} of 6</strong>
+        ${id < 6 ? 'Complete the activity, then continue' : 'Final level — well done!'}
+      </div>
+      <button class="btn btn-primary" id="next-btn" ${id === 6 ? 'disabled aria-disabled="true"' : ''}>
+        ${id === 6 ? 'Complete ✓' : 'Next Level →'}
+      </button>
+    </nav>
+  `;
+
+  // Bind nav buttons
+  const prevBtn = $('prev-btn');
+  const nextBtn = $('next-btn');
+  if (prevBtn && !prevBtn.disabled) prevBtn.addEventListener('click', () => navigateTo(currentLevel - 1));
+  if (nextBtn && !nextBtn.disabled) nextBtn.addEventListener('click', () => navigateTo(currentLevel + 1));
+
+  // Init activity
+  initActivity(level);
+
+  // Focus heading
+  const heading = $('level-heading');
+  if (heading) { setTimeout(() => heading.focus(), 100); }
+
+  // Add tutor opener to chat
+  appendTutorMessage(level.panelOpener);
+
+  // Scroll main content to top
+  document.querySelector('.main-content').scrollTop = 0;
+}
+
+function navigateTo(id) {
+  if (id < 1 || id > 6) return;
+  renderLevel(id);
+}
+
+// ── Activity builders ────────────────────────────────────
+
+function buildActivity(level) {
+  switch (level.activityType) {
+    case 'classifier': return buildClassifier(level.activityData);
+    case 'sort':       return buildSort(level.activityData);
+    case 'argbuilder': return buildArgBuilder(level.activityData);
+    case 'paths':      return buildPaths(level.activityData);
+    case 'matcher':    return buildMatcher(level.activityData);
+    case 'dialectic':  return buildDialectic(level.activityData);
+    default: return '<p>Activity loading…</p>';
+  }
+}
+
+// ── LEVEL 1: Classifier ──────────────────────────────────
+function buildClassifier(data) {
+  return `
+    <div id="classifier-container">
+      ${data.map((item, i) => `
+        <div class="claim-card" id="claim-${i}">
+          <blockquote>"${item.quote}"</blockquote>
+          <cite>${item.source}</cite>
+          <div class="claim-options" role="group" aria-label="Classify this claim">
+            <button class="claim-option-btn" data-claim="${i}" data-choice="supports" aria-label="Supports emotional knowledge">✓ Supports emotional knowledge</button>
+            <button class="claim-option-btn" data-claim="${i}" data-choice="obstructs" aria-label="Challenges emotional knowledge">✗ Challenges it</button>
+            <button class="claim-option-btn" data-claim="${i}" data-choice="neutral" aria-label="Neither">— Neither</button>
+          </div>
+          <div class="claim-feedback" id="feedback-${i}" role="alert"></div>
+        </div>
+      `).join('')}
+      <div id="classifier-score" class="feedback-panel" role="status"></div>
+    </div>
+  `;
+}
+
+function initClassifier(data) {
+  activityState.classifier = { answers: {}, total: data.length };
+
+  document.querySelectorAll('.claim-option-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = parseInt(btn.dataset.claim);
+      const choice = btn.dataset.choice;
+      const item = data[idx];
+      if (activityState.classifier.answers[idx] !== undefined) return; // already answered
+
+      activityState.classifier.answers[idx] = choice;
+      const correct = choice === item.answer;
+
+      // Mark button
+      btn.classList.add(correct ? 'selected-correct' : 'selected-wrong');
+
+      // Show feedback
+      const fb = $(`feedback-${idx}`);
+      fb.textContent = item.explanation;
+      fb.classList.add('show', correct ? 'correct' : 'wrong');
+
+      // Disable all buttons for this claim
+      document.querySelectorAll(`[data-claim="${idx}"]`).forEach(b => { b.disabled = true; });
+
+      announce(correct ? 'Correct. ' + item.explanation : 'Not quite. ' + item.explanation);
+
+      // Check if all done
+      if (Object.keys(activityState.classifier.answers).length === data.length) {
+        const score = Object.entries(activityState.classifier.answers).filter(([i, a]) => a === data[i].answer).length;
+        const scoreEl = $('classifier-score');
+        scoreEl.innerHTML = `<h4>Activity complete: ${score}/${data.length} correct</h4><p>${score === data.length ? 'You\'re identifying the epistemological implications precisely — that\'s the skill your essay needs.' : 'Review the feedback on each claim. The key is identifying what assumption is embedded in the language.'}</p>`;
+        scoreEl.classList.add('show', score >= data.length - 1 ? 'correct' : 'partial');
+      }
+    });
+  });
+}
+
+// ── LEVEL 2: Zone Sort ───────────────────────────────────
+function buildSort(data) {
+  const cards = shuffle([...data.cards]);
+  return `
+    <p class="u-help-text">
+      Click a card to select it, then click the zone where it belongs. Click a placed card to return it to the pool.
+    </p>
+    <div class="sort-pool" id="sort-pool" role="list" aria-label="Cards to sort">
+      ${cards.map(c => `
+        <button class="sort-card" id="sc-${c.id}" data-id="${c.id}" role="listitem" aria-label="${c.text}">
+          ${c.text}
+        </button>
+      `).join('')}
+    </div>
+    <div class="sort-zones" role="group" aria-label="Sort zones">
+      ${data.zones.map(z => `
+        <div class="sort-zone" id="zone-${z.id}" data-zone="${z.id}" role="region" aria-label="${z.label}">
+          <div class="sort-zone-label">${z.label}</div>
+          <div class="zone-cards" id="zc-${z.id}"></div>
+        </div>
+      `).join('')}
+    </div>
+    <div class="u-action-row">
+      <button class="btn btn-primary" id="sort-check">Check answers</button>
+      <button class="btn btn-outline" id="sort-reset">Reset</button>
+    </div>
+    <div id="sort-feedback" class="feedback-panel" role="status"></div>
+  `;
+}
+
+function initSort(data) {
+  activityState.sort = { selected: null, placed: {} };
+
+  function selectCard(id) {
+    if (activityState.sort.selected === id) {
+      activityState.sort.selected = null;
+      document.querySelectorAll('.sort-card').forEach(c => c.classList.remove('card-selected'));
+      return;
+    }
+    activityState.sort.selected = id;
+    document.querySelectorAll('.sort-card').forEach(c => c.classList.remove('card-selected'));
+    const el = document.getElementById(`sc-${id}`);
+    if (el) el.classList.add('card-selected');
+  }
+
+  function placeCard(zoneId) {
+    const id = activityState.sort.selected;
+    if (!id) return;
+    activityState.sort.selected = null;
+
+    // Remove from current location
+    const card = document.getElementById(`sc-${id}`);
+    if (card) card.remove();
+
+    // Create new card in zone
+    const zoneCards = document.getElementById(`zc-${zoneId}`);
+    const newCard = document.createElement('button');
+    newCard.className = 'sort-card';
+    newCard.id = `sc-${id}`;
+    newCard.dataset.id = id;
+    newCard.setAttribute('aria-label', `${data.cards.find(c=>c.id===id).text} (in zone ${zoneId})`);
+    newCard.textContent = data.cards.find(c => c.id === id).text;
+    newCard.addEventListener('click', () => {
+      // Return to pool
+      newCard.remove();
+      delete activityState.sort.placed[id];
+      const pool = $('sort-pool');
+      newCard.classList.remove('card-selected');
+      pool.appendChild(newCard);
+      bindPoolCard(newCard);
+    });
+    zoneCards.appendChild(newCard);
+    activityState.sort.placed[id] = zoneId;
+    document.querySelectorAll('.sort-card').forEach(c => c.classList.remove('card-selected'));
+  }
+
+  function bindPoolCard(el) {
+    el.addEventListener('click', () => {
+      selectCard(el.dataset.id);
+    });
+  }
+
+  // Bind pool cards
+  document.querySelectorAll('#sort-pool .sort-card').forEach(bindPoolCard);
+
+  // Bind zones
+  data.zones.forEach(z => {
+    const zone = document.getElementById(`zone-${z.id}`);
+    zone.addEventListener('click', () => {
+      if (activityState.sort.selected) placeCard(z.id);
+    });
+    zone.setAttribute('tabindex', '0');
+    zone.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        if (activityState.sort.selected) placeCard(z.id);
+      }
+    });
+  });
+
+  // Check button
+  $('sort-check').addEventListener('click', () => {
+    let correct = 0;
+    data.cards.forEach(c => {
+      const placed = activityState.sort.placed[c.id];
+      const el = document.getElementById(`sc-${c.id}`);
+      if (el) {
+        if (!placed) return;
+        if (placed === c.correct) {
+          el.classList.add('correct-placed'); correct++;
+        } else {
+          el.classList.add('wrong-placed');
+        }
+      }
+    });
+    const fb = $('sort-feedback');
+    fb.innerHTML = `<h4>${correct}/${data.cards.length} correctly sorted</h4><p>${correct >= 6 ? 'Excellent — you\'re making the Hume/Nussbaum distinction precisely.' : 'Check the cards marked in red. The key distinction: Hume gives emotion a FUNCTIONAL role (motivating); Nussbaum gives it a COGNITIVE role (constituting knowledge).'}</p>`;
+    fb.classList.add('show', correct >= 6 ? 'correct' : 'partial');
+    announce(`${correct} of ${data.cards.length} correctly placed.`);
+  });
+
+  $('sort-reset').addEventListener('click', () => {
+    activityState.sort = { selected: null, placed: {} };
+    renderLevel(currentLevel);
+  });
+}
+
+// ── LEVEL 3: Argument Builder ────────────────────────────
+function buildArgBuilder(data) {
+  const shuffled = shuffle([...data.cards]);
+  return `
+    <div class="u-grid-2">
+      <div>
+        <p class="u-section-label">Cards (click to select):</p>
+        <div id="arg-pool" class="arg-cards-container">
+          ${shuffled.map(c => `
+            <div class="arg-card" id="argcard-${c.id}" data-id="${c.id}" tabindex="0" role="button" aria-label="${c.text}">
+              <div class="arg-number" id="argnum-${c.id}">?</div>
+              <div>${c.text}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      <div>
+        <p class="u-section-label">Argument order (click a slot to place selected card):</p>
+        <div id="arg-slots" class="arg-cards-container">
+          ${Array.from({length: data.slots}, (_, i) => `
+            <div class="arg-card arg-slot-empty" id="slot-${i+1}" data-slot="${i+1}" tabindex="0" role="button" aria-label="Position ${i+1}: empty">
+              <div class="arg-number active">${i+1}</div>
+              <div class="slot-label">Click to place selected card here…</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+    <div class="u-action-row-lg">
+      <button class="btn btn-primary" id="arg-check">Check my order</button>
+      <button class="btn btn-outline" id="arg-reset">Reset</button>
+    </div>
+    <div id="arg-feedback" class="feedback-panel" role="status"></div>
+  `;
+}
+
+function initArgBuilder(data) {
+  activityState.arg = { selected: null, placed: {} }; // placed: {slot -> cardId}
+
+  function selectCard(id) {
+    activityState.arg.selected = activityState.arg.selected === id ? null : id;
+    document.querySelectorAll('.arg-card').forEach(c => c.classList.remove('arg-selected'));
+    if (activityState.arg.selected) {
+      document.getElementById(`argcard-${activityState.arg.selected}`)?.classList.add('arg-selected');
+    }
+  }
+
+  function placeInSlot(slot) {
+    const id = activityState.arg.selected;
+    if (!id) return;
+
+    // Remove any existing card in this slot
+    const existing = Object.entries(activityState.arg.placed).find(([, v]) => v === id);
+    if (existing) { delete activityState.arg.placed[existing[0]]; }
+
+    activityState.arg.placed[slot] = id;
+    activityState.arg.selected = null;
+
+    // Update all slot displays
+    for (let s = 1; s <= data.slots; s++) {
+      const slotEl = document.getElementById(`slot-${s}`);
+      const cardId = activityState.arg.placed[s];
+      const num = slotEl.querySelector('.arg-number');
+      num.className = 'arg-number active';
+      const labelEl = slotEl.querySelector('.slot-label');
+      if (cardId) {
+        const card = data.cards.find(c => c.id === cardId);
+        labelEl.textContent = card.text;
+        slotEl.classList.remove('arg-slot-empty');
+        slotEl.classList.add('arg-slot-filled');
+        slotEl.setAttribute('aria-label', `Position ${s}: ${card.text}`);
+      } else {
+        labelEl.textContent = 'Click to place selected card here…';
+        slotEl.classList.remove('arg-slot-filled');
+        slotEl.classList.add('arg-slot-empty');
+        slotEl.setAttribute('aria-label', `Position ${s}: empty`);
+      }
+    }
+
+    // Update pool card numbers
+    data.cards.forEach(c => {
+      const placed = Object.entries(activityState.arg.placed).find(([, v]) => v === c.id);
+      const num = document.getElementById(`argnum-${c.id}`);
+      if (num) { num.textContent = placed ? placed[0] : '?'; }
+    });
+
+    document.querySelectorAll('.arg-card').forEach(c => c.classList.remove('arg-selected'));
+  }
+
+  document.querySelectorAll('#arg-pool .arg-card').forEach(el => {
+    el.addEventListener('click', () => selectCard(el.dataset.id));
+    el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectCard(el.dataset.id); }});
+  });
+
+  document.querySelectorAll('#arg-slots .arg-card').forEach(el => {
+    el.addEventListener('click', () => placeInSlot(parseInt(el.dataset.slot)));
+    el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); placeInSlot(parseInt(el.dataset.slot)); }});
+  });
+
+  $('arg-check').addEventListener('click', () => {
+    let correct = 0;
+    for (let s = 1; s <= data.slots; s++) {
+      const placed = activityState.arg.placed[s];
+      const expected = data.cards.find(c => c.correctSlot === s);
+      const slotEl = document.getElementById(`slot-${s}`);
+      slotEl.classList.remove('arg-correct', 'arg-wrong');
+      if (placed && expected && placed === expected.id) {
+        slotEl.classList.add('arg-correct'); correct++;
+      } else if (placed) {
+        slotEl.classList.add('arg-wrong');
+      }
+    }
+    const fb = $('arg-feedback');
+    const hint = correct < data.slots ? 'Hint: start with the foundational claim about what emotions ARE, then work toward the conclusion about knowledge.' : '';
+    fb.innerHTML = `<h4>${correct}/${data.slots} steps in the correct position</h4><p>${correct === data.slots ? 'You\'ve reconstructed Nussbaum\'s argument correctly. This is the argument structure you need for Prompt 2.' : hint}</p>`;
+    fb.classList.add('show', correct >= 5 ? 'correct' : 'partial');
+    announce(`${correct} of ${data.slots} steps correctly placed.`);
+  });
+
+  $('arg-reset').addEventListener('click', () => renderLevel(currentLevel));
+}
+
+// ── LEVEL 4: Two-Path Scenario ───────────────────────────
+function buildPaths(data) {
+  return `
+    <div class="callout u-mb-md">
+      <p class="callout-label">Scenario</p>
+      <p>${data.scenario}</p>
+    </div>
+    <div class="path-grid">
+      ${data.paths.map(path => `
+        <div class="path-card ${path.id}">
+          <div class="path-card-header">${path.label}</div>
+          <div class="path-card-body">
+            <p>${path.description}</p>
+            ${path.questions.map(q => `
+              <div class="path-question" id="pq-${q.id}">
+                <p>${q.text}</p>
+                <div class="path-radio-group" role="group" aria-label="${q.text}">
+                  ${q.options.map((opt, i) => `
+                    <label class="path-radio-label" id="prl-${q.id}-${i}">
+                      <input type="checkbox" name="${q.id}" value="${i}" data-qid="${q.id}" data-correct="${opt.correct}" data-idx="${i}">
+                      ${opt.text}
+                    </label>
+                  `).join('')}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `).join('')}
+    </div>
+    <button class="btn btn-primary u-mt-md" id="path-check">Check my selections</button>
+    <div class="path-question u-mt-md">
+      <p class="u-bold">${data.synthesis}</p>
+      <textarea class="synthesis-textarea u-mt-sm" id="path-synthesis" placeholder="Write 2–3 sentences using Nussbaum's terminology…" rows="4"></textarea>
+      <p class="word-count" id="path-wc">0 words</p>
+    </div>
+    <div id="path-feedback" class="feedback-panel" role="status"></div>
+  `;
+}
+
+function initPaths(data) {
+  $('path-synthesis').addEventListener('input', function() {
+    const wc = this.value.trim().split(/\s+/).filter(w => w).length;
+    $('path-wc').textContent = wc + ' words';
+  });
+
+  $('path-check').addEventListener('click', () => {
+    let correct = 0, total = 0;
+    data.paths.forEach(path => {
+      path.questions.forEach(q => {
+        q.options.forEach((opt, i) => {
+          total++;
+          const cb = document.querySelector(`[data-qid="${q.id}"][data-idx="${i}"]`);
+          const label = document.getElementById(`prl-${q.id}-${i}`);
+          label.classList.remove('path-correct', 'path-wrong');
+          if (cb.checked && opt.correct) { label.classList.add('path-correct'); correct++; }
+          else if (cb.checked && !opt.correct) { label.classList.add('path-wrong'); }
+          else if (!cb.checked && opt.correct) { label.classList.add('path-correct'); } // show correct anyway
+        });
+      });
+    });
+    const fb = $('path-feedback');
+    fb.innerHTML = `<h4>Results revealed</h4><p>Observer A had factual, propositional knowledge about causes. Observer B had perceptual-emotional knowledge about particular human value. Nussbaum's claim is that B's knowledge is real knowledge — and that A was <em>blind</em> to features B could perceive. Neither path is complete; the philosophical question is whether B's knowledge is genuinely epistemic or merely empathetic.</p>`;
+    fb.classList.add('show', 'correct');
+    announce('Results shown. Review the highlighted answers.');
+  });
+}
+
+// ── LEVEL 5: Matcher ──────────────────────────────────────
+function buildMatcher(data) {
+  return `
+    <div id="matcher-container">
+      ${data.map(item => `
+        <div class="matcher-item" id="mi-${item.id}">
+          <div class="matcher-claim">${item.claim}</div>
+          <div class="matcher-options" role="group" aria-label="Who holds this claim?">
+            ${item.options.map(opt => `
+              <button class="matcher-btn" data-item="${item.id}" data-opt="${opt}" aria-label="${opt}">
+                ${opt}
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      `).join('')}
+    </div>
+    <div class="u-action-row-lg">
+      <button class="btn btn-primary" id="matcher-check">Check answers</button>
+      <button class="btn btn-outline" id="matcher-reset">Reset</button>
+    </div>
+    <div id="matcher-feedback" class="feedback-panel" role="status"></div>
+  `;
+}
+
+function initMatcher(data) {
+  activityState.matcher = {};
+
+  document.querySelectorAll('.matcher-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const itemId = btn.dataset.item;
+      const opt = btn.dataset.opt;
+      // Deselect others in same group
+      document.querySelectorAll(`[data-item="${itemId}"]`).forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      activityState.matcher[itemId] = opt;
+    });
+    btn.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); btn.click(); }
+    });
+  });
+
+  $('matcher-check').addEventListener('click', () => {
+    let correct = 0;
+    data.forEach(item => {
+      const chosen = activityState.matcher[item.id];
+      document.querySelectorAll(`[data-item="${item.id}"]`).forEach(b => {
+        b.classList.remove('correct-final', 'wrong-final');
+        if (b.dataset.opt === item.answer) b.classList.add('correct-final');
+        else if (b.dataset.opt === chosen && chosen !== item.answer) b.classList.add('wrong-final');
+      });
+      if (chosen === item.answer) correct++;
+    });
+    const fb = $('matcher-feedback');
+    fb.innerHTML = `<h4>${correct}/${data.length} correctly matched</h4><p>${correct >= 7 ? 'You\'re making the Haidt/Nussbaum distinction precisely — this is crucial for any essay that uses both thinkers.' : 'Focus on the distinction between Haidt\'s EMPIRICAL findings about how intuitions work, and Nussbaum\'s PHILOSOPHICAL argument about what makes emotional responses reliable knowledge.'}</p>`;
+    fb.classList.add('show', correct >= 6 ? 'correct' : 'partial');
+    announce(`${correct} of ${data.length} correctly matched.`);
+  });
+
+  $('matcher-reset').addEventListener('click', () => renderLevel(currentLevel));
+}
+
+// ── LEVEL 6: Dialectic ───────────────────────────────────
+function buildDialectic(data) {
+  return `
+    <div class="u-mb-lg">
+      <h3 class="dialectic-heading">Part A — Select Nussbaum's strongest reply</h3>
+      <div class="reply-options" role="group" aria-label="Select a reply">
+        ${data.replies.map(r => `
+          <button class="reply-option" id="reply-${r.id}" data-id="${r.id}" aria-pressed="false">
+            <div class="reply-label">${r.label}</div>
+            <div>${r.text}</div>
+          </button>
+        `).join('')}
+      </div>
+      <button class="btn btn-primary u-mb-md" id="reply-check">Reveal analysis</button>
+      <div id="reply-feedback" class="feedback-panel" role="status"></div>
+    </div>
+
+    <div class="synthesis-area">
+      <h3>Part B — Write a dialectical synthesis paragraph</h3>
+      <p>${data.synthesisPrompt}</p>
+      <textarea class="synthesis-textarea" id="synthesis-text" placeholder="Nussbaum argues that… Plato objects that… However, Nussbaum can reply that… Therefore…" rows="6" aria-label="Synthesis paragraph"></textarea>
+      <p class="word-count" id="synth-wc">0 words</p>
+      <button class="btn btn-amber u-mt-sm" id="synth-submit" disabled>
+        Submit to Socratic Tutor
+      </button>
+    </div>
+  `;
+}
+
+function initDialectic(data) {
+  activityState.dialectic = { selected: null };
+
+  document.querySelectorAll('.reply-option').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.reply-option').forEach(b => {
+        b.classList.remove('reply-selected');
+        b.setAttribute('aria-pressed', 'false');
+      });
+      btn.classList.add('reply-selected');
+      btn.setAttribute('aria-pressed', 'true');
+      activityState.dialectic.selected = btn.dataset.id;
+    });
+    btn.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); btn.click(); }});
+  });
+
+  $('reply-check').addEventListener('click', () => {
+    const selected = activityState.dialectic.selected;
+    if (!selected) { announce('Please select a reply first.'); return; }
+    data.replies.forEach(r => {
+      const el = document.getElementById(`reply-${r.id}`);
+      el.classList.remove('reply-selected');
+      if (r.quality === 'best') el.classList.add('reply-best');
+      else el.classList.add('reply-not-best');
+    });
+    const sel = data.replies.find(r => r.id === selected);
+    const fb = $('reply-feedback');
+    fb.innerHTML = `<h4>You chose: ${sel.label}</h4><p>${sel.explanation}</p>`;
+    fb.classList.add('show', sel.quality === 'best' ? 'correct' : 'partial');
+    announce(sel.quality === 'best' ? 'Correct — that is the strongest reply.' : 'Not the strongest. ' + sel.explanation);
+  });
+
+  const synthText = $('synthesis-text');
+  const synthWc = $('synth-wc');
+  const synthSubmit = $('synth-submit');
+
+  synthText.addEventListener('input', () => {
+    const words = synthText.value.trim().split(/\s+/).filter(w => w).length;
+    synthWc.textContent = words + ' words';
+    synthWc.className = 'word-count' + (words >= 100 && words <= 180 ? ' target' : '');
+    synthSubmit.disabled = words < 50;
+  });
+
+  synthSubmit.addEventListener('click', () => {
+    const text = synthText.value.trim();
+    const textarea = $('chat-textarea');
+    if (textarea) {
+      textarea.value = `I\'ve written this dialectical paragraph — can you give me feedback on whether the argument structure is correct?\n\n"${text}"`;
+      textarea.dispatchEvent(new Event('input'));
+    }
+    $('chat-form').dispatchEvent(new Event('submit'));
+    announce('Paragraph sent to your Socratic tutor for feedback.');
+  });
+}
+
+// ── Init activity (after DOM build) ─────────────────────
+function initActivity(level) {
+  switch (level.activityType) {
+    case 'classifier': initClassifier(level.activityData); break;
+    case 'sort':       initSort(level.activityData); break;
+    case 'argbuilder': initArgBuilder(level.activityData); break;
+    case 'paths':      initPaths(level.activityData); break;
+    case 'matcher':    initMatcher(level.activityData); break;
+    case 'dialectic':  initDialectic(level.activityData); break;
+  }
+}
+
+// ── Socratic chat ─────────────────────────────────────────
+function renderPanel() {
+  const msgs = $('chat-messages');
+  if (!serverOnline) {
+    // Show offline notice once
+    if (!msgs.querySelector('.chat-offline-notice')) {
+      const notice = document.createElement('div');
+      notice.className = 'chat-offline-notice';
+      notice.innerHTML = '<strong>Tutor offline</strong><br>Start the server to enable the Socratic AI tutor:<br><code>npm start</code><br>Then refresh this page.';
+      msgs.prepend(notice);
+    }
+  }
+}
+
+function appendTutorMessage(text) {
+  const msgs = $('chat-messages');
+  const div = document.createElement('div');
+  div.className = 'chat-msg tutor';
+  div.textContent = text;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function appendStudentMessage(text) {
+  const msgs = $('chat-messages');
+  const div = document.createElement('div');
+  div.className = 'chat-msg student';
+  div.textContent = text;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function appendThinking() {
+  const msgs = $('chat-messages');
+  const div = document.createElement('div');
+  div.className = 'chat-msg thinking';
+  div.id = 'thinking-indicator';
+  div.innerHTML = '<span class="typing-indicator"><span>●</span><span>●</span><span>●</span></span>';
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+async function sendMessage(text) {
+  if (!serverOnline) {
+    appendTutorMessage('The Socratic tutor is offline. Run `npm start` in this folder to enable it.');
+    return;
+  }
+
+  appendStudentMessage(text);
+  chatHistory.push({ role: 'user', content: text });
+
+  const thinking = appendThinking();
+  $('chat-send').disabled = true;
+
+  let fullText = '';
+  const msgs = $('chat-messages');
+
+  try {
+    const res = await fetch('http://localhost:3000/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: text, level: currentLevel, history: chatHistory.slice(-8) })
+    });
+
+    if (!res.ok) throw new Error('Server error');
+
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let responseDiv = null;
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+
+      const chunk = decoder.decode(value, { stream: true });
+      const lines = chunk.split('\n');
+
+      for (const line of lines) {
+        if (!line.startsWith('data: ')) continue;
+        const data = line.slice(6);
+        if (data === '[DONE]') break;
+        try {
+          const json = JSON.parse(data);
+          if (json.error) { appendTutorMessage('Error: ' + json.error); break; }
+          if (json.text) {
+            fullText += json.text;
+            if (!responseDiv) {
+              thinking.remove();
+              responseDiv = document.createElement('div');
+              responseDiv.className = 'chat-msg tutor';
+              msgs.appendChild(responseDiv);
+            }
+            responseDiv.textContent = fullText;
+            msgs.scrollTop = msgs.scrollHeight;
+          }
+        } catch { /* non-JSON line */ }
+      }
+    }
+
+    if (fullText) chatHistory.push({ role: 'assistant', content: fullText });
+
+  } catch (err) {
+    thinking.remove();
+    appendTutorMessage('Connection error — is the server running? Try `npm start`.');
+    serverOnline = false;
+  } finally {
+    $('chat-send').disabled = false;
+    $('chat-textarea').focus();
+  }
+}
+
+// Chat form submit
+$('chat-form').addEventListener('submit', async e => {
+  e.preventDefault();
+  const ta = $('chat-textarea');
+  const text = ta.value.trim();
+  if (!text) return;
+  ta.value = '';
+  await sendMessage(text);
+});
+
+// Enter to send (Shift+Enter for newline)
+$('chat-textarea').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    $('chat-form').dispatchEvent(new Event('submit'));
+  }
+});
+
+// ── Utility ────────────────────────────────────────────────
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+// ── Boot ──────────────────────────────────────────────────
+(async function boot() {
+  await checkServer();
+  renderLevel(1);
+})();
+</script>
+</body>
+</html>

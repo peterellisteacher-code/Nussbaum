@@ -1,0 +1,15 @@
+{
+  "name": "nussbaum-emotional-knowledge",
+  "version": "1.0.0",
+  "description": "Stage 2 Philosophy interactive learning site — Martha Nussbaum's epistemology of emotion",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.51.0",
+    "express": "^4.19.0",
+    "cors": "^2.8.5"
+  }
+}
