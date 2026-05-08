@@ -675,6 +675,29 @@ a:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
 }
 .level-nav-info strong { color: var(--navy); display: block; }
 
+/* ── Page navigation (within a level) ──────────────────────── */
+.page-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md) 0;
+  max-width: 680px;
+  margin-top: var(--space-lg);
+  gap: var(--space-md);
+  border-top: 1px solid var(--border);
+}
+.page-indicator {
+  text-align: center;
+  font-size: var(--text-sm);
+  color: var(--mid-grey);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+.page-content {
+  min-height: 50vh;
+  animation: fadeUp 0.3s ease;
+}
+
 /* ── Socratic panel ───────────────────────────────────────── */
 .socratic-panel {
   width: 380px;
@@ -1543,6 +1566,8 @@ const LEVELS = {
 
 // ── Application state ────────────────────────────────────
 let currentLevel = 1;
+let currentPageIndex = 0;
+let currentPages = [];
 let chatHistory = [];
 let serverOnline = false;
 let activityState = {};
@@ -1567,10 +1592,35 @@ function announce(msg) {
 }
 
 // ── Render level ─────────────────────────────────────────
+// Split a level's content HTML into discrete pages, breaking on
+// top-level <h2>/<h3> boundaries so each subsection becomes its own page.
+function paginateContent(html) {
+  const tmp = document.createElement('div');
+  tmp.innerHTML = html.trim();
+  const nodes = Array.from(tmp.children);
+  const pages = [];
+  let buf = [];
+  nodes.forEach(node => {
+    const tag = node.tagName.toLowerCase();
+    if ((tag === 'h2' || tag === 'h3') && buf.length > 0) {
+      pages.push(buf.join('\n'));
+      buf = [];
+    }
+    buf.push(node.outerHTML);
+  });
+  if (buf.length > 0) pages.push(buf.join('\n'));
+  return pages.length ? pages : [html];
+}
+
 function renderLevel(id) {
   const level = LEVELS[id];
   if (!level) return;
   currentLevel = id;
+  currentPageIndex = 0;
+
+  // Build paginated content + activity as the final page
+  const contentPages = paginateContent(level.content).map(html => ({ type: 'content', html }));
+  currentPages = [...contentPages, { type: 'activity', level }];
 
   // Update progress dots
   document.querySelectorAll('.progress-dot').forEach((dot, i) => {
@@ -1583,7 +1633,35 @@ function renderLevel(id) {
   // Update panel context
   $('panel-context').textContent = level.panelContext;
 
-  // Build level HTML
+  // Build all pages up front, hidden except the first. This preserves
+  // the activity's DOM and any in-progress answers when the user pages
+  // back to content and forward again.
+  const pagesHtml = currentPages.map((page, i) => {
+    const hidden = i === 0 ? '' : 'hidden';
+    if (page.type === 'activity') {
+      const lvl = page.level;
+      return `
+        <div class="page-content" data-page-index="${i}" ${hidden}>
+          <section class="activity-zone" aria-labelledby="activity-heading">
+            <div class="activity-header">
+              <div class="activity-icon" aria-hidden="true">${lvl.activityIcon}</div>
+              <div>
+                <h2 id="activity-heading" tabindex="-1">${lvl.activityTitle}</h2>
+                <p>${lvl.activityDesc}</p>
+              </div>
+            </div>
+            <div id="activity-content">${buildActivity(lvl)}</div>
+          </section>
+        </div>
+      `;
+    }
+    return `
+      <div class="page-content" data-page-index="${i}" ${hidden}>
+        <div class="content-body">${page.html}</div>
+      </div>
+    `;
+  }).join('');
+
   const container = $('level-container');
   container.innerHTML = `
     <div class="level-badge" aria-label="${level.badge}">${level.badge}</div>
@@ -1591,30 +1669,21 @@ function renderLevel(id) {
     <p class="level-subtitle">${level.subtitle}</p>
     <img class="level-image" src="${level.image}" alt="${level.imageAlt}" width="1200" height="280" loading="lazy">
 
-    <div class="content-body">
-      ${level.content}
-    </div>
+    <div id="pages-wrapper">${pagesHtml}</div>
 
-    <section class="activity-zone" aria-labelledby="activity-heading">
-      <div class="activity-header">
-        <div class="activity-icon" aria-hidden="true">${level.activityIcon}</div>
-        <div>
-          <h2 id="activity-heading">${level.activityTitle}</h2>
-          <p>${level.activityDesc}</p>
-        </div>
-      </div>
-      <div id="activity-content">
-        ${buildActivity(level)}
-      </div>
-    </section>
+    <nav class="page-nav" id="page-nav" aria-label="Navigate within this level">
+      <button class="btn btn-outline" id="page-prev-btn">← Back</button>
+      <div class="page-indicator" id="page-indicator" aria-live="polite"></div>
+      <button class="btn btn-primary" id="page-next-btn">Next →</button>
+    </nav>
 
-    <nav class="level-nav" aria-label="Navigate between levels">
+    <nav class="level-nav" id="level-nav" aria-label="Navigate between levels" hidden>
       <button class="btn btn-outline" id="prev-btn" ${id === 1 ? 'disabled aria-disabled="true"' : ''}>
-        ← Previous
+        ← Previous Level
       </button>
       <div class="level-nav-info">
         <strong>Level ${id} of 6</strong>
-        ${id < 6 ? 'Complete the activity, then continue' : 'Final level — well done!'}
+        ${id < 6 ? 'Continue when you\'re ready' : 'Final level — well done!'}
       </div>
       <button class="btn btn-primary" id="next-btn" ${id === 6 ? 'disabled aria-disabled="true"' : ''}>
         ${id === 6 ? 'Complete ✓' : 'Next Level →'}
@@ -1622,24 +1691,82 @@ function renderLevel(id) {
     </nav>
   `;
 
-  // Bind nav buttons
+  // Bind level-to-level nav
   const prevBtn = $('prev-btn');
   const nextBtn = $('next-btn');
   if (prevBtn && !prevBtn.disabled) prevBtn.addEventListener('click', () => navigateTo(currentLevel - 1));
   if (nextBtn && !nextBtn.disabled) nextBtn.addEventListener('click', () => navigateTo(currentLevel + 1));
 
-  // Init activity
+  // Bind page nav
+  $('page-prev-btn').addEventListener('click', () => goToPage(currentPageIndex - 1));
+  $('page-next-btn').addEventListener('click', () => goToPage(currentPageIndex + 1));
+
+  // Init activity once now that its DOM exists
   initActivity(level);
 
-  // Focus heading
+  // Render first page state
+  renderPage(true);
+
+  // Focus the level title on level entry
   const heading = $('level-heading');
-  if (heading) { setTimeout(() => heading.focus(), 100); }
+  if (heading) setTimeout(() => heading.focus(), 100);
 
   // Add tutor opener to chat
   appendTutorMessage(level.panelOpener);
+}
 
-  // Scroll main content to top
+function renderPage(isInitialEntry = false) {
+  const total = currentPages.length;
+  const isLast = currentPageIndex === total - 1;
+
+  // Show only the current page (and re-trigger fade animation on it)
+  document.querySelectorAll('#pages-wrapper .page-content').forEach(el => {
+    const idx = parseInt(el.dataset.pageIndex, 10);
+    const show = idx === currentPageIndex;
+    el.hidden = !show;
+    if (show) {
+      el.style.animation = 'none';
+      // eslint-disable-next-line no-unused-expressions
+      el.offsetHeight;
+      el.style.animation = '';
+    }
+  });
+
+  // Page indicator + button states
+  $('page-indicator').textContent = `Page ${currentPageIndex + 1} of ${total}`;
+  $('page-prev-btn').disabled = currentPageIndex === 0;
+
+  const nextBtn = $('page-next-btn');
+  if (isLast) {
+    nextBtn.style.visibility = 'hidden';
+  } else {
+    nextBtn.style.visibility = 'visible';
+    const nextIsActivity = currentPages[currentPageIndex + 1].type === 'activity';
+    nextBtn.textContent = nextIsActivity ? 'Continue to activity →' : 'Next →';
+  }
+
+  // Show level-to-level nav only on the last (activity) page
+  $('level-nav').hidden = !isLast;
+
+  // Scroll main content to top of the new page
   document.querySelector('.main-content').scrollTop = 0;
+
+  // Move focus to the first heading on the newly shown page (skip on initial
+  // entry — the level title handles that for us).
+  if (!isInitialEntry) {
+    const visible = document.querySelector(`#pages-wrapper .page-content[data-page-index="${currentPageIndex}"]`);
+    const target = visible && visible.querySelector('h2, h3');
+    if (target) {
+      target.setAttribute('tabindex', '-1');
+      setTimeout(() => target.focus(), 80);
+    }
+  }
+}
+
+function goToPage(idx) {
+  if (idx < 0 || idx >= currentPages.length) return;
+  currentPageIndex = idx;
+  renderPage();
 }
 
 function navigateTo(id) {
