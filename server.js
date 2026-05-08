@@ -42,7 +42,7 @@ app.post('/api/chat', async (req, res) => {
 
   try {
     const stream = client.messages.stream({
-      model: 'claude-opus-4-7',
+      model: 'claude-haiku-4-5',
       max_tokens: 250,
       system: [
         {
