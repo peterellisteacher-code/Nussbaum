@@ -1550,7 +1550,7 @@ let activityState = {};
 // ── Check server health ──────────────────────────────────
 async function checkServer() {
   try {
-    const r = await fetch('http://localhost:3000/api/health', { signal: AbortSignal.timeout(2000) });
+    const r = await fetch('/api/health', { signal: AbortSignal.timeout(3000) });
     serverOnline = r.ok;
   } catch {
     serverOnline = false;
@@ -2202,7 +2202,7 @@ function renderPanel() {
     if (!msgs.querySelector('.chat-offline-notice')) {
       const notice = document.createElement('div');
       notice.className = 'chat-offline-notice';
-      notice.innerHTML = '<strong>Tutor offline</strong><br>Start the server to enable the Socratic AI tutor:<br><code>npm start</code><br>Then refresh this page.';
+      notice.innerHTML = '<strong>Tutor offline</strong><br>The Socratic backend isn\'t reachable. If running locally, start with <code>npm start</code>. If deployed, check that <code>ANTHROPIC_API_KEY</code> is set in environment variables and the function deployed.';
       msgs.prepend(notice);
     }
   }
@@ -2253,7 +2253,7 @@ async function sendMessage(text) {
   const msgs = $('chat-messages');
 
   try {
-    const res = await fetch('http://localhost:3000/api/chat', {
+    const res = await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ message: text, level: currentLevel, history: chatHistory.slice(-8) })

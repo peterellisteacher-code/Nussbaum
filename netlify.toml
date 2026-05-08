@@ -1,0 +1,10 @@
+# Netlify build + functions configuration
+# Routes /api/chat and /api/health are configured via the `path` field
+# in each function file (Netlify Functions v2 API), so no redirects needed.
+
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
