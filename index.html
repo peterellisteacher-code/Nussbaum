@@ -1203,36 +1203,31 @@ const LEVELS = {
         quote: "A detached scientist who removes personal feelings from their observations will understand the subject more objectively.",
         source: "Common assumption in scientific methodology",
         answer: "obstructs",
-        label: "Obstructs knowledge",
-        explanation: "Correct. This claim assumes emotional detachment produces better knowledge — which is exactly the rationalist position Nussbaum is challenging. The word 'objectively' encodes the assumption that emotion distorts."
+        explanation: "This claim assumes emotional detachment produces better knowledge — which is exactly the rationalist position Nussbaum is challenging. The word 'objectively' encodes the assumption that emotion distorts."
       },
       {
         quote: "The expert teacher doesn't just know the subject — they feel the difficulty their students experience, and that feeling makes them a better teacher of it.",
         source: "Pedagogical observation",
         answer: "supports",
-        label: "Supports emotional knowledge",
-        explanation: "Correct. This suggests that emotional access — feeling the student's difficulty — provides epistemic access to something (what it's like to struggle) that purely technical knowledge misses."
+        explanation: "This suggests that emotional access — feeling the student's difficulty — provides epistemic access to something (what it's like to struggle) that purely technical knowledge misses."
       },
       {
         quote: "Grief reveals the true value of what we've lost in a way that no rational inventory could capture.",
         source: "Phenomenological observation",
         answer: "supports",
-        label: "Supports emotional knowledge",
-        explanation: "Correct — and this is close to Nussbaum's own view. Grief discloses value. It tells us something real about the worth of what is lost. This is an emotional response functioning as epistemic access."
+        explanation: "This is close to Nussbaum's own view. Grief discloses value — it tells us something real about the worth of what is lost. The emotional response functions as epistemic access."
       },
       {
         quote: "Our gut reactions to moral situations are unreliable guides to truth — they shift with culture and mood.",
         source: "Sceptical challenge",
         answer: "obstructs",
-        label: "Obstructs knowledge",
-        explanation: "Correct. This is a version of the instability/variability objection. Because emotional responses shift with culture and context, they cannot provide stable, reliable knowledge."
+        explanation: "This is a version of the instability/variability objection. Because emotional responses shift with culture and context, the claim says they cannot provide stable, reliable knowledge."
       },
       {
         quote: "A judge who feels anger at a defendant is more likely to give a harsher sentence than the evidence warrants.",
         source: "Empirical psychology research",
         answer: "obstructs",
-        label: "Obstructs knowledge",
-        explanation: "Correct. This is empirical evidence for the rationalist position — emotion (anger) distorts judgment (sentencing) away from the evidence. This is the kind of case Siegel's 'hijacked experience' would later theorise."
+        explanation: "This is empirical evidence for the rationalist position — emotion (anger) distorts judgment (sentencing) away from the evidence. This is the kind of case Siegel's 'hijacked experience' would later theorise."
       }
     ]
   },
@@ -1969,6 +1964,14 @@ function buildClassifier(data) {
   `;
 }
 
+// Friendly labels for classifier choices (used when telling the student
+// what the correct answer was after they got one wrong).
+const CLASSIFIER_CHOICE_LABELS = {
+  supports: 'Supports emotional knowledge',
+  obstructs: 'Challenges it',
+  neutral: 'Neither'
+};
+
 function initClassifier(data) {
   activityState.classifier = { answers: {}, total: data.length };
 
@@ -1981,19 +1984,24 @@ function initClassifier(data) {
 
       activityState.classifier.answers[idx] = choice;
       const correct = choice === item.answer;
+      const correctLabel = CLASSIFIER_CHOICE_LABELS[item.answer] || item.answer;
 
       // Mark button
       btn.classList.add(correct ? 'selected-correct' : 'selected-wrong');
 
-      // Show feedback
+      // Build feedback text — the data's `explanation` is just the WHY;
+      // we prepend a verdict that matches the student's actual answer.
+      const verdict = correct
+        ? '✓ Correct. '
+        : `✗ Not quite — the answer is "${correctLabel}". `;
       const fb = $(`feedback-${idx}`);
-      fb.textContent = item.explanation;
+      fb.textContent = verdict + item.explanation;
       fb.classList.add('show', correct ? 'correct' : 'wrong');
 
       // Disable all buttons for this claim
       document.querySelectorAll(`[data-claim="${idx}"]`).forEach(b => { b.disabled = true; });
 
-      announce(correct ? 'Correct. ' + item.explanation : 'Not quite. ' + item.explanation);
+      announce(verdict + item.explanation);
 
       // Check if all done
       if (Object.keys(activityState.classifier.answers).length === data.length) {
