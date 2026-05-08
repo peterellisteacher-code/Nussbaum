@@ -676,6 +676,54 @@ a:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
 .level-nav-info strong { color: var(--navy); display: block; }
 
 /* ── Page navigation (within a level) ──────────────────────── */
+.page-progress {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid var(--divider);
+}
+.page-progress-dots {
+  display: flex;
+  gap: 6px;
+}
+.page-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--light-grey);
+  transition: var(--transition);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+.page-dot:hover { background: var(--mid-grey); }
+.page-dot:focus-visible {
+  outline: 3px solid var(--amber);
+  outline-offset: 3px;
+}
+.page-dot.active {
+  background: var(--amber);
+  width: 32px;
+  border-radius: 5px;
+  cursor: default;
+}
+.page-dot.completed {
+  background: var(--navy);
+}
+.page-dot.completed:hover { background: var(--navy-light); }
+.page-progress-label {
+  font-size: var(--text-sm);
+  color: var(--mid-grey);
+  font-weight: 500;
+}
+.page-progress-label .page-label-current {
+  color: var(--navy);
+  font-weight: 600;
+  font-family: var(--font-serif);
+  font-style: italic;
+}
 .page-nav {
   display: flex;
   align-items: center;
@@ -684,7 +732,7 @@ a:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
   max-width: 680px;
   margin-top: var(--space-lg);
   gap: var(--space-md);
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--divider);
 }
 .page-indicator {
   text-align: center;
@@ -694,7 +742,7 @@ a:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
   letter-spacing: 0.02em;
 }
 .page-content {
-  min-height: 50vh;
+  min-height: 40vh;
   animation: fadeUp 0.3s ease;
 }
 
@@ -1101,37 +1149,51 @@ const LEVELS = {
     imageAlt: 'Plato\'s chariot allegory — the charioteer controlling the two horses of reason and passion',
     panelContext: 'We\'re examining Plato\'s case against emotional knowledge. Push yourself to name the exact epistemic problem — not just "emotions are unreliable," but WHY they fail his specific standard for knowledge.',
     panelOpener: 'Plato thinks emotions obstruct knowledge. Before we see why — what do YOU think? Is there anything you know because of a feeling you had, that you couldn\'t have known without it?',
-    content: `
-      <h2>The Problem Nussbaum is Responding To</h2>
-      <p>Before we can understand what Nussbaum is arguing, we need to understand what she is arguing <em>against</em>. That tradition begins with Plato.</p>
+    pages: [
+      {
+        label: 'The Setup',
+        html: `
+          <h3>The Problem Nussbaum is Responding To</h3>
+          <p>Before we can understand what Nussbaum is arguing, we need to understand what she is arguing <em>against</em>. That tradition begins with Plato.</p>
 
-      <h3>Plato's Charioteer</h3>
-      <p>In the <em>Phaedrus</em>, Plato describes the soul as a chariot pulled by two horses. One horse is noble — representing reason. The other is dark and unruly — representing appetite and emotion. The charioteer (reason) must control the dark horse to steer toward truth and the eternal Forms.</p>
+          <p>In the <em>Phaedrus</em>, Plato describes the soul as a chariot pulled by two horses. One horse is noble — representing reason. The other is dark and unruly — representing appetite and emotion. The charioteer (reason) must control the dark horse to steer toward truth and the eternal Forms.</p>
 
-      <p>This is not just a metaphor for self-control. It encodes a specific <span class="key-term">epistemic claim</span>: genuine knowledge requires access to <em>universal, eternal Forms</em> — the real essences of things. The Beautiful, the Just, the True. Emotions, by contrast, tie us to particular, changing, subjective experience. They belong to the realm of appearance, not reality.</p>
+          <p>This is not just a metaphor for self-control. It encodes a specific <span class="key-term">epistemic claim</span>: genuine knowledge requires access to <em>universal, eternal Forms</em> — the real essences of things. The Beautiful, the Just, the True. Emotions, by contrast, tie us to particular, changing, subjective experience. They belong to the realm of appearance, not reality.</p>
+        `
+      },
+      {
+        label: 'Plato\'s Case',
+        html: `
+          <h3>Plato's Epistemological Case</h3>
+          <p>Plato's objection to emotion as knowledge has several interlocking parts. Each is important for your essay:</p>
+          <ol>
+            <li><strong>Particularity:</strong> Emotions respond to this person, this situation, right now. Knowledge must be universal — applicable across all cases.</li>
+            <li><strong>Instability:</strong> My emotional responses change over time and differ from yours. Knowledge must be stable and inter-subjectively valid.</li>
+            <li><strong>Non-justifiability:</strong> I cannot give rational justification for my grief in the way I can prove a geometric theorem. Knowledge requires justification.</li>
+            <li><strong>Susceptibility:</strong> Emotions can be manipulated — a skilled orator or advertiser can produce the "right" feeling without producing truth. This makes them unreliable guides.</li>
+          </ol>
 
-      <h3>Plato's Epistemological Case</h3>
-      <p>Plato's objection to emotion as knowledge has several interlocking parts. Each is important for your essay:</p>
-      <ol>
-        <li><strong>Particularity:</strong> Emotions respond to this person, this situation, right now. Knowledge must be universal — applicable across all cases.</li>
-        <li><strong>Instability:</strong> My emotional responses change over time and differ from yours. Knowledge must be stable and inter-subjectively valid.</li>
-        <li><strong>Non-justifiability:</strong> I cannot give rational justification for my grief in the way I can prove a geometric theorem. Knowledge requires justification.</li>
-        <li><strong>Susceptibility:</strong> Emotions can be manipulated — a skilled orator or advertiser can produce the "right" feeling without producing truth. This makes them unreliable guides.</li>
-      </ol>
+          <div class="objection-box">
+            <strong>Plato's verdict on Nussbaum (in advance):</strong><br>
+            <em>"What she calls 'emotional knowledge' is not true knowledge — it is affect, not justified true belief. The grieving person may respond to genuine loss, but their response does not constitute knowledge of the Form of goodness or justice. It is an opinion at best."</em>
+          </div>
+        `
+      },
+      {
+        label: 'What\'s at Stake',
+        html: `
+          <h3>Why This Matters for Your Essay</h3>
+          <p>Nussbaum's entire project is a reply to this tradition. If you are going to write on Prompts 2 or 3, you need to be able to articulate Plato's objection precisely — so you can show Nussbaum's response to it.</p>
 
-      <div class="objection-box">
-        <strong>Plato's verdict on Nussbaum (in advance):</strong><br>
-        <em>"What she calls 'emotional knowledge' is not true knowledge — it is affect, not justified true belief. The grieving person may respond to genuine loss, but their response does not constitute knowledge of the Form of goodness or justice. It is an opinion at best."</em>
-      </div>
+          <p>Plato's challenge sets the standard Nussbaum has to meet: she must show that <em>some</em> emotional responses can be universal enough, stable enough, justifiable enough, and reliable enough to count as knowledge. That is the philosophical work of the next five levels.</p>
 
-      <h3>Why This Matters for Your Essay</h3>
-      <p>Nussbaum's entire project is a reply to this tradition. If you are going to write on Prompts 2 or 3, you need to be able to articulate Plato's objection precisely — so you can show Nussbaum's response to it.</p>
-
-      <div class="ai-probe">
-        <p class="probe-label">🤖 AI Probe</p>
-        <p>Could an AI system have Platonic knowledge of the Forms? It processes universal rules, not particular emotional responses. Does that mean it knows more than we do — or does it miss something?</p>
-      </div>
-    `,
+          <div class="ai-probe">
+            <p class="probe-label">🤖 AI Probe</p>
+            <p>Could an AI system have Platonic knowledge of the Forms? It processes universal rules, not particular emotional responses. Does that mean it knows more than we do — or does it miss something?</p>
+          </div>
+        `
+      }
+    ],
     activityTitle: 'Claim Analyser',
     activityIcon: '🔍',
     activityDesc: 'For each statement below, decide whether it supports the view that emotion obstructs knowledge, challenges it, or is about something else. Read carefully — the distinctions matter.',
@@ -1184,43 +1246,58 @@ const LEVELS = {
     imageAlt: 'Abstract illustration of Hume\'s passions as large amber currents with reason as a small blue flame',
     panelContext: 'The key question here is the difference between Hume and Nussbaum. Both give emotion an important role — but is it the same role? Push students to name exactly what Hume thinks emotions DO, and whether that is the same as being a form of knowledge.',
     panelOpener: 'Hume says reason is the slave of the passions. Nussbaum says emotions ARE a form of knowledge. Are these the same claim? What\'s the difference — if there is one?',
-    content: `
-      <h2>Not All Defences of Emotion Are the Same</h2>
-      <p>It would be easy to assume that Hume and Nussbaum are making similar arguments — both give emotion an important role against the rationalist tradition. But the difference between their positions is philosophically precise, and getting it wrong will cost you marks in your essay.</p>
+    pages: [
+      {
+        label: 'The Distinction Matters',
+        html: `
+          <h3>Not All Defences of Emotion Are the Same</h3>
+          <p>It would be easy to assume that Hume and Nussbaum are making similar arguments — both give emotion an important role against the rationalist tradition. But the difference between their positions is philosophically precise, and getting it wrong will cost you marks in your essay.</p>
 
-      <h3>Hume's Empiricism</h3>
-      <p>David Hume (1711–1776) argued that reason alone cannot motivate action. If I know that exercise is good for my health, that piece of knowledge by itself gives me no reason to exercise. What gets me off the couch is a <em>desire</em> — a passion. Reason tells me <em>how</em> to achieve what I want. It cannot tell me <em>what</em> to want.</p>
+          <p>David Hume (1711–1776) argued that reason alone cannot motivate action. If I know that exercise is good for my health, that piece of knowledge by itself gives me no reason to exercise. What gets me off the couch is a <em>desire</em> — a passion. Reason tells me <em>how</em> to achieve what I want. It cannot tell me <em>what</em> to want.</p>
 
-      <p>This is Hume's famous claim: <span class="key-term">reason is the slave of the passions</span>. It is a claim about <strong>function</strong> — about what emotions do in our practical reasoning. They supply the ends; reason supplies the means.</p>
+          <p>This is Hume's famous claim: <span class="key-term">reason is the slave of the passions</span>. It is a claim about <strong>function</strong> — about what emotions do in our practical reasoning. They supply the ends; reason supplies the means.</p>
+        `
+      },
+      {
+        label: 'Hume vs Nussbaum',
+        html: `
+          <h3>What Hume is NOT Saying</h3>
+          <p>Crucially, Hume is not claiming that passions are themselves a form of <em>knowledge</em>. He is claiming they are <em>motivators</em>. The passion of compassion motivates me to help others; but Hume does not say that compassion gives me epistemic access to the nature of suffering that reason cannot.</p>
 
-      <h3>What Hume is NOT Saying</h3>
-      <p>Crucially, Hume is not claiming that passions are themselves a form of <em>knowledge</em>. He is claiming they are <em>motivators</em>. The passion of compassion motivates me to help others; but Hume does not say that compassion gives me epistemic access to the nature of suffering that reason cannot.</p>
+          <h3>Why Nussbaum Goes Further</h3>
+          <p>Nussbaum's claim is stronger and more philosophically radical. She argues that emotions do not merely motivate — they <em>cognise</em>. They have propositional content. They constitute a form of thought. This is why she calls them <span class="key-term">emotion-cognitions</span>: they are not just pushes toward action, they are ways of perceiving and understanding situations.</p>
 
-      <h3>Why Nussbaum Goes Further</h3>
-      <p>Nussbaum's claim is stronger and more philosophically radical. She argues that emotions do not merely motivate — they <em>cognise</em>. They have propositional content. They constitute a form of thought. This is why she calls them <span class="key-term">emotion-cognitions</span>: they are not just pushes toward action, they are ways of perceiving and understanding situations.</p>
+          <table class="comparison-table">
+            <thead>
+              <tr><th>Question</th><th>Hume</th><th>Nussbaum</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Do emotions motivate action?</td><td>Yes — this is their primary role</td><td>Yes — but that is not their only role</td></tr>
+              <tr><td>Do emotions constitute knowledge?</td><td>No — they are not cognitive</td><td>Yes — they are a form of thought with propositional content</td></tr>
+              <tr><td>Can emotions be true or false?</td><td>Emotions are neither — they are impulses</td><td>Yes — they track real features of situations</td></tr>
+              <tr><td>Is reason superior to emotion?</td><td>No — reason serves passion</td><td>Neither is superior — they are both cognitive</td></tr>
+            </tbody>
+          </table>
+        `
+      },
+      {
+        label: 'Essay Tip',
+        html: `
+          <h3>Using Hume Precisely</h3>
+          <div class="callout">
+            <p class="callout-label">Essay tip</p>
+            <p>If you use Hume in your essay, be clear about what he is and is not claiming. He is useful for showing that the Western tradition's dismissal of emotion is contested — but he does not make Nussbaum's specific claim about emotion as epistemic capacity. Confusing the two will read as imprecise philosophical analysis.</p>
+          </div>
 
-      <table class="comparison-table">
-        <thead>
-          <tr><th>Question</th><th>Hume</th><th>Nussbaum</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Do emotions motivate action?</td><td>Yes — this is their primary role</td><td>Yes — but that is not their only role</td></tr>
-          <tr><td>Do emotions constitute knowledge?</td><td>No — they are not cognitive</td><td>Yes — they are a form of thought with propositional content</td></tr>
-          <tr><td>Can emotions be true or false?</td><td>Emotions are neither — they are impulses</td><td>Yes — they track real features of situations</td></tr>
-          <tr><td>Is reason superior to emotion?</td><td>No — reason serves passion</td><td>Neither is superior — they are both cognitive</td></tr>
-        </tbody>
-      </table>
+          <p>The Level 2 activity below tests exactly this distinction. As you work through the eight claims, notice that some sit comfortably in Hume's territory ("emotion motivates action") while only a few make the stronger Nussbaum move ("emotion <em>is</em> knowledge").</p>
 
-      <div class="callout">
-        <p class="callout-label">Essay tip</p>
-        <p>If you use Hume in your essay, be clear about what he is and is not claiming. He is useful for showing that the Western tradition's dismissal of emotion is contested — but he does not make Nussbaum's specific claim about emotion as epistemic capacity. Confusing the two will read as imprecise philosophical analysis.</p>
-      </div>
-
-      <div class="ai-probe">
-        <p class="probe-label">🤖 AI Probe</p>
-        <p>Does an AI have Humean passions? It optimises toward outputs — is that like having desires? But can it be said to <em>want</em> anything? And does Hume's picture of motivation even apply to systems with no survival needs?</p>
-      </div>
-    `,
+          <div class="ai-probe">
+            <p class="probe-label">🤖 AI Probe</p>
+            <p>Does an AI have Humean passions? It optimises toward outputs — is that like having desires? But can it be said to <em>want</em> anything? And does Hume's picture of motivation even apply to systems with no survival needs?</p>
+          </div>
+        `
+      }
+    ],
     activityTitle: 'Three-Zone Sort',
     activityIcon: '📦',
     activityDesc: 'Sort each claim into the correct zone. Select a card from the pool, then click the zone where it belongs. You can change your mind by clicking a placed card to return it.',
@@ -1253,42 +1330,56 @@ const LEVELS = {
     imageAlt: 'Abstract illustration of a mind in which emotions and thoughts form one interconnected network',
     panelContext: 'Students are working through the concept of emotion-cognitions. The key philosophical move is propositional content — push them to explain why it matters that emotions can be true or false, not just felt.',
     panelOpener: 'Nussbaum says emotions are "thoughts to which strong commitment is attached." What does it mean for a thought to have "propositional content"? And why does that matter for whether emotion can be knowledge?',
-    content: `
-      <h2>The Central Philosophical Move</h2>
-      <p>Nussbaum's most important philosophical move is deceptively simple: she argues that the traditional reason/emotion dichotomy is built on a false picture of what emotions <em>are</em>.</p>
+    pages: [
+      {
+        label: 'The Central Move',
+        html: `
+          <h3>The Central Philosophical Move</h3>
+          <p>Nussbaum's most important philosophical move is deceptively simple: she argues that the traditional reason/emotion dichotomy is built on a false picture of what emotions <em>are</em>.</p>
 
-      <p>The traditional picture: emotions are non-cognitive events that happen to us — we feel fear, or anger, or grief, like a kind of weather in the body. Reason then arrives to assess the situation properly.</p>
+          <p><strong>The traditional picture:</strong> emotions are non-cognitive events that happen to us — we feel fear, or anger, or grief, like a kind of weather in the body. Reason then arrives to assess the situation properly.</p>
 
-      <p>Nussbaum's picture: emotions are themselves <em>cognitive</em>. They are evaluative judgments about what matters to us.</p>
+          <p><strong>Nussbaum's picture:</strong> emotions are themselves <em>cognitive</em>. They are evaluative judgments about what matters to us.</p>
 
-      <h3>Emotion-Cognitions</h3>
-      <p>Nussbaum calls emotions <span class="key-term">emotion-cognitions</span>: "thoughts to which a strong sense of commitment is attached." This is not saying emotions <em>contain</em> a cognitive component alongside the feeling. It is saying that the emotion <em>is</em> the thought.</p>
+          <p>Nussbaum calls emotions <span class="key-term">emotion-cognitions</span>: "thoughts to which a strong sense of commitment is attached." This is not saying emotions <em>contain</em> a cognitive component alongside the feeling. It is saying that the emotion <em>is</em> the thought.</p>
 
-      <p>Consider fear. When I feel fear, I am not just having a bodily sensation of alarm plus a separate belief that danger is present. The fear itself is the perception that something threatening is happening to something I value. The structure of fear is: <em>"I fear that X will harm Y, where Y matters to me."</em></p>
+          <p>Consider fear. When I feel fear, I am not just having a bodily sensation of alarm plus a separate belief that danger is present. The fear itself is the perception that something threatening is happening to something I value. The structure of fear is: <em>"I fear that X will harm Y, where Y matters to me."</em></p>
+        `
+      },
+      {
+        label: 'Why Propositions Matter',
+        html: `
+          <h3>Propositional Content — Why It Matters</h3>
+          <p>Philosophers call this <span class="key-term">propositional content</span>: the emotion is <em>about</em> something, and that aboutness has the structure of a proposition (a claim that can be true or false).</p>
 
-      <h3>Propositional Content — Why It Matters</h3>
-      <p>Philosophers call this <span class="key-term">propositional content</span>: the emotion is <em>about</em> something, and that aboutness has the structure of a proposition (a claim that can be true or false).</p>
+          <p>This is the decisive move. If emotions have propositional content, then:</p>
+          <ol>
+            <li>They can be <strong>accurate or inaccurate</strong> — they can track real features of situations, or they can distort them.</li>
+            <li>They can be <strong>justified or unjustified</strong> — some emotional responses are warranted by the situation, others are not.</li>
+            <li>They can constitute <strong>knowledge</strong> — if an emotion accurately tracks a real feature of a situation, it is a form of epistemic access to that feature.</li>
+          </ol>
 
-      <p>This is the decisive move. If emotions have propositional content, then:</p>
-      <ol>
-        <li>They can be <strong>accurate or inaccurate</strong> — they can track real features of situations, or they can distort them.</li>
-        <li>They can be <strong>justified or unjustified</strong> — some emotional responses are warranted by the situation, others are not.</li>
-        <li>They can constitute <strong>knowledge</strong> — if an emotion accurately tracks a real feature of a situation, it is a form of epistemic access to that feature.</li>
-      </ol>
+          <div class="quotation">
+            "Emotions are not just the push of desire and the pull of pain, but forms of evaluative judgment that recognise value in persons and things outside ourselves."
+            <cite>— Nussbaum, <em>Upheavals of Thought</em></cite>
+          </div>
+        `
+      },
+      {
+        label: 'Dichotomy Dismantled',
+        html: `
+          <h3>The Reason/Emotion Dichotomy Dismantled</h3>
+          <p>If emotions are a form of thought, then dismissing them as "merely emotional" is not more rigorous than dismissing any other kind of thought — it is a category error. The question is not whether to trust reason or emotion, but which emotional responses (like which beliefs) are <em>well-founded</em>.</p>
 
-      <div class="quotation">
-        "Emotions are not just the push of desire and the pull of pain, but forms of evaluative judgment that recognise value in persons and things outside ourselves."
-        <cite>— Nussbaum, <em>Upheavals of Thought</em></cite>
-      </div>
+          <p>This is what Nussbaum has done in three philosophical moves: shown emotions are judgments, shown those judgments have propositional structure, and shown that propositional structure is what makes them candidates for knowledge. Plato's dichotomy, in her hands, collapses.</p>
 
-      <h3>The Reason/Emotion Dichotomy Dismantled</h3>
-      <p>If emotions are a form of thought, then dismissing them as "merely emotional" is not more rigorous than dismissing any other kind of thought — it is a category error. The question is not whether to trust reason or emotion, but which emotional responses (like which beliefs) are <em>well-founded</em>.</p>
-
-      <div class="ai-probe">
-        <p class="probe-label">🤖 AI Probe</p>
-        <p>Could an AI have emotion-cognitions? It produces outputs with propositional content. But does it have the "strong sense of commitment" Nussbaum requires? What would it mean for an AI to be genuinely <em>committed</em> to a claim, not just to generate it?</p>
-      </div>
-    `,
+          <div class="ai-probe">
+            <p class="probe-label">🤖 AI Probe</p>
+            <p>Could an AI have emotion-cognitions? It produces outputs with propositional content. But does it have the "strong sense of commitment" Nussbaum requires? What would it mean for an AI to be genuinely <em>committed</em> to a claim, not just to generate it?</p>
+          </div>
+        `
+      }
+    ],
     activityTitle: 'Argument Builder',
     activityIcon: '🧩',
     activityDesc: 'The six cards below are steps in Nussbaum\'s argument for emotion-cognitions, but they\'re in the wrong order. Click a card to select it, then click the numbered slot where it belongs.',
@@ -1345,41 +1436,55 @@ const LEVELS = {
     imageAlt: 'An open book from which human figures emerge, reaching toward each other across worlds',
     panelContext: 'Students have just explored two approaches to a scenario. Push them to identify what KIND of knowledge narrative engagement provides — not just "more empathy" but specifically what the engaged observer knows that the detached one doesn\'t, and how that knowledge was acquired.',
     panelOpener: 'After exploring the two paths — what exactly did the narratively engaged observer KNOW that the detached one didn\'t? Was it different information, or a different mode of access to the same reality?',
-    content: `
-      <h2>Literature as an Epistemic Tool</h2>
-      <p>Nussbaum's most striking claim — and the one hardest to dismiss as "merely" ethical — is that engagement with literature is a form of <em>epistemic</em> practice. It does not just make us kinder. It makes us better <em>knowers</em>.</p>
+    pages: [
+      {
+        label: 'Literature as an Epistemic Tool',
+        html: `
+          <h3>Literature as an Epistemic Tool</h3>
+          <p>Nussbaum's most striking claim — and the one hardest to dismiss as "merely" ethical — is that engagement with literature is a form of <em>epistemic</em> practice. It does not just make us kinder. It makes us better <em>knowers</em>.</p>
 
-      <h3>The Case of Henry James</h3>
-      <p>Nussbaum draws extensively on the novels of Henry James. James's fiction demands a particular quality of attention from the reader — what Nussbaum calls being <span class="key-term">finely aware and richly responsible</span>. This is not just careful reading. It is a form of moral and cognitive perception.</p>
+          <p>Nussbaum draws extensively on the novels of Henry James. James's fiction demands a particular quality of attention from the reader — what Nussbaum calls being <span class="key-term">finely aware and richly responsible</span>. This is not just careful reading. It is a form of moral and cognitive perception.</p>
 
-      <div class="quotation">
-        "Moral knowledge, James suggests, is not simply intellectual grasp of particular facts; it is not even simply intellectual grasp of particular facts; it is <em>perception</em>… It is seeing a complex, concrete reality in a highly lucid and richly responsive way; it is taking in what is there, with imagination and feeling."
-        <cite>— Nussbaum, <em>Love's Knowledge</em>, p.152</cite>
-      </div>
+          <div class="quotation">
+            "Moral knowledge, James suggests, is not simply intellectual grasp of particular facts; it is <em>perception</em>… It is seeing a complex, concrete reality in a highly lucid and richly responsive way; it is taking in what is there, with imagination and feeling."
+            <cite>— Nussbaum, <em>Love's Knowledge</em>, p.152</cite>
+          </div>
+        `
+      },
+      {
+        label: 'The Danger of Detachment',
+        html: `
+          <h3>The Epistemic Danger of Detachment</h3>
+          <p>Nussbaum argues that emotional detachment is not epistemically neutral — it is a form of <em>blindness</em>. Someone who "cuts off emotion" to achieve objectivity does not see more clearly; they become unable to perceive certain features of situations that are only visible to emotionally engaged attention.</p>
 
-      <h3>The Epistemic Danger of Detachment</h3>
-      <p>Nussbaum argues that emotional detachment is not epistemically neutral — it is a form of <em>blindness</em>. Someone who "cuts off emotion" to achieve objectivity does not see more clearly; they become unable to perceive certain features of situations that are only visible to emotionally engaged attention.</p>
+          <div class="quotation">
+            "If you are going to see life as it is, you have to be willing to be perplexed, to see its mystery and complexity; consoling simplification brings dullness of vision."
+            <cite>— Nussbaum, <em>Love's Knowledge</em>, p.207</cite>
+          </div>
 
-      <div class="quotation">
-        "If you are going to see life as it is, you have to be willing to be perplexed, to see its mystery and complexity; consoling simplification brings dullness of vision."
-        <cite>— Nussbaum, <em>Love's Knowledge</em>, p.207</cite>
-      </div>
+          <p>And from the character in Henry James she cites approvingly:</p>
 
-      <p>And from the character in Henry James she cites approvingly:</p>
+          <div class="quotation">
+            "There are mysteries you can't see into unless you happen to have a little decent human feeling."
+            <cite>— Henry James, <em>The Princess Casamassima</em>, cited by Nussbaum</cite>
+          </div>
+        `
+      },
+      {
+        label: 'Reliability and the Living Question',
+        html: `
+          <h3>Narrative Imagination as Reliability</h3>
+          <p>Nussbaum's epistemological claim is <em>reliabilist</em>: a cognitive process is a source of knowledge if it reliably produces true beliefs. She argues that trained narrative imagination — the capacity to imaginatively inhabit another person's situation — reliably produces true beliefs about human experience, suffering, and value that detached analysis cannot access.</p>
 
-      <div class="quotation">
-        "There are mysteries you can't see into unless you happen to have a little decent human feeling."
-        <cite>— Henry James, <em>The Princess Casamassima</em>, cited by Nussbaum</cite>
-      </div>
+          <p>The activity that follows tests this directly. You will see two observers approach the same situation: one with clinical distance, one with narrative engagement. The question is not whether one is "nicer" than the other — it is whether one of them <em>knows</em> something the other does not.</p>
 
-      <h3>Narrative Imagination as Reliability</h3>
-      <p>Nussbaum's epistemological claim is <em>reliabilist</em>: a cognitive process is a source of knowledge if it reliably produces true beliefs. She argues that trained narrative imagination — the capacity to imaginatively inhabit another person's situation — reliably produces true beliefs about human experience, suffering, and value that detached analysis cannot access.</p>
-
-      <div class="ai-probe">
-        <p class="probe-label">🤖 AI Probe</p>
-        <p>AI has processed enormous amounts of literature — it has "read" more Henry James than any human. Does this give it narrative imagination? Or is Nussbaum's epistemic capacity about something that requires genuine vulnerability and attachment — something an AI cannot have?</p>
-      </div>
-    `,
+          <div class="ai-probe">
+            <p class="probe-label">🤖 AI Probe</p>
+            <p>AI has processed enormous amounts of literature — it has "read" more Henry James than any human. Does this give it narrative imagination? Or is Nussbaum's epistemic capacity about something that requires genuine vulnerability and attachment — something an AI cannot have?</p>
+          </div>
+        `
+      }
+    ],
     activityTitle: 'Two-Path Scenario',
     activityIcon: '🚶',
     activityDesc: 'Read through two different approaches to the same situation. Then answer the questions about what each observer knew and what they missed.',
@@ -1435,51 +1540,69 @@ const LEVELS = {
     imageAlt: 'A wise elephant and a scholarly rider working as partners — Haidt\'s social intuitionist model',
     panelContext: 'CRITICAL — students must not frame Haidt and Nussbaum as opposed. Push them to see the composite picture: Haidt maps how intuitions actually work; Nussbaum asks how they can be made more reliable. Both treat emotion as cognitive/informational.',
     panelOpener: 'Haidt says intuitions get there first and are reliable. Nussbaum says cultivated emotion gives us better knowledge. Are these claims in conflict? Or do they need each other?',
-    content: `
-      <h2>Haidt is Not Nussbaum's Opponent</h2>
+    pages: [
+      {
+        label: 'The Composite Picture',
+        html: `
+          <h3>Haidt is Not Nussbaum's Opponent</h3>
 
-      <div class="callout">
-        <p class="callout-label">⚠ Critical framing note</p>
-        <p>A very common essay error is to set up Haidt and Nussbaum as opposing each other — as if Haidt's "emotion gets there first" somehow challenges Nussbaum's view. <strong>This is wrong.</strong> Both thinkers treat emotion as cognitively informative. They are building a composite picture together. Framing them as opponents will cost you marks.</p>
-      </div>
+          <div class="callout">
+            <p class="callout-label">⚠ Critical framing note</p>
+            <p>A very common essay error is to set up Haidt and Nussbaum as opposing each other — as if Haidt's "emotion gets there first" somehow challenges Nussbaum's view. <strong>This is wrong.</strong> Both thinkers treat emotion as cognitively informative. They are building a composite picture together. Framing them as opponents will cost you marks.</p>
+          </div>
 
-      <h3>Haidt's Social Intuitionist Model</h3>
-      <p>Jonathan Haidt's research in moral psychology found that when people make moral judgments, their intuitive responses arrive <em>before</em> their conscious reasoning — and that the reasoning often functions as post-hoc rationalisation of what they already felt.</p>
+          <h3>Haidt's Social Intuitionist Model</h3>
+          <p>Jonathan Haidt's research in moral psychology found that when people make moral judgments, their intuitive responses arrive <em>before</em> their conscious reasoning — and that the reasoning often functions as post-hoc rationalisation of what they already felt.</p>
 
-      <p>His famous image: the <span class="key-term">elephant and the rider</span>. The elephant is our moral intuition — fast, powerful, largely pre-conscious. The rider (reason) sits on top, thinks they are in charge, but mostly follows where the elephant goes. When the rider can't find a reason to support what the elephant wants to do, it finds one, or invents one.</p>
+          <p>His famous image: the <span class="key-term">elephant and the rider</span>. The elephant is our moral intuition — fast, powerful, largely pre-conscious. The rider (reason) sits on top, thinks they are in charge, but mostly follows where the elephant goes. When the rider can't find a reason to support what the elephant wants to do, it finds one, or invents one.</p>
 
-      <p>Crucially, Haidt does not say the elephant is stupid. He says intuitions evolved to solve real adaptive problems and are generally reliable within the cultural contexts in which they operate. The elephant has its own intelligence.</p>
+          <p>Crucially, Haidt does not say the elephant is stupid. He says intuitions evolved to solve real adaptive problems and are generally reliable within the cultural contexts in which they operate. The elephant has its own intelligence.</p>
+        `
+      },
+      {
+        label: 'Floor and Training',
+        html: `
+          <h3>What Haidt Establishes (the floor)</h3>
+          <p>Haidt provides the empirical baseline that Nussbaum needs:</p>
+          <ul>
+            <li>Emotional/intuitive responses are <em>informative</em>, not merely motivating</li>
+            <li>Dismissing them as "irrational noise" is a mistake — they track real moral features</li>
+            <li>Reason is not the primary engine of moral judgment</li>
+          </ul>
 
-      <h3>What Haidt Establishes (the floor)</h3>
-      <p>Haidt provides the empirical baseline that Nussbaum needs:</p>
-      <ul>
-        <li>Emotional/intuitive responses are <em>informative</em>, not merely motivating</li>
-        <li>Dismissing them as "irrational noise" is a mistake — they track real moral features</li>
-        <li>Reason is not the primary engine of moral judgment</li>
-      </ul>
+          <h3>What Nussbaum Adds (the training question)</h3>
+          <p>Nussbaum accepts Haidt's empirical picture and asks a philosophical question he does not: <em>can the elephant be trained?</em></p>
 
-      <h3>What Nussbaum Adds (the training question)</h3>
-      <p>Nussbaum accepts Haidt's empirical picture and asks a philosophical question he does not: <em>can the elephant be trained?</em></p>
+          <p>Haidt says intuitions change slowly through social and cultural evolution. Nussbaum says there is a mechanism for deliberately refining them: <em>disciplined attentive engagement with literature and the particulars of human situations</em>. This is why literature matters epistemically — not as moral instruction, but as a training mechanism for perceptual accuracy.</p>
 
-      <p>Haidt says intuitions change slowly through social and cultural evolution. Nussbaum says there is a mechanism for deliberately refining them: <em>disciplined attentive engagement with literature and the particulars of human situations</em>. This is why literature matters epistemically — not as moral instruction, but as a training mechanism for perceptual accuracy.</p>
+          <table class="comparison-table">
+            <thead>
+              <tr><th></th><th>Haidt</th><th>Nussbaum</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Is emotion cognitive?</td><td>Yes — intuitions are informational</td><td>Yes — emotion-cognitions have propositional content</td></tr>
+              <tr><td>Does reasoning override intuition?</td><td>Rarely, in isolation</td><td>Not by overriding — by refining</td></tr>
+              <tr><td>What changes intuitions?</td><td>Slow cultural/social evolution</td><td>Disciplined attentive practice (literature)</td></tr>
+              <tr><td>Primary method</td><td>Empirical psychology</td><td>Philosophical analysis + literary criticism</td></tr>
+            </tbody>
+          </table>
+        `
+      },
+      {
+        label: 'Where AI Fits',
+        html: `
+          <h3>The Composite Reading</h3>
+          <p>So when you write your essay, the move to make is not "Haidt vs Nussbaum" but "Haidt + Nussbaum." Haidt maps how moral cognition actually works. Nussbaum names a mechanism by which it can be made more reliable. Each completes the other's picture.</p>
 
-      <table class="comparison-table">
-        <thead>
-          <tr><th></th><th>Haidt</th><th>Nussbaum</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Is emotion cognitive?</td><td>Yes — intuitions are informational</td><td>Yes — emotion-cognitions have propositional content</td></tr>
-          <tr><td>Does reasoning override intuition?</td><td>Rarely, in isolation</td><td>Not by overriding — by refining</td></tr>
-          <tr><td>What changes intuitions?</td><td>Slow cultural/social evolution</td><td>Disciplined attentive practice (literature)</td></tr>
-          <tr><td>Primary method</td><td>Empirical psychology</td><td>Philosophical analysis + literary criticism</td></tr>
-        </tbody>
-      </table>
+          <p>The activity that follows asks you to match eight philosophical claims to the right thinker — Haidt, Nussbaum, or Both. Notice how often the answer is Both. That itself is the composite picture.</p>
 
-      <div class="ai-probe">
-        <p class="probe-label">🤖 AI Probe</p>
-        <p>Does AI have an "elephant"? Its outputs emerge from trained pattern-matching that precedes conscious reasoning — which sounds Haidtian. But Haidt's elephant evolved in social groups with survival stakes. Can the same concept apply to a system with no stakes, no vulnerability, no survival?</p>
-      </div>
-    `,
+          <div class="ai-probe">
+            <p class="probe-label">🤖 AI Probe</p>
+            <p>Does AI have an "elephant"? Its outputs emerge from trained pattern-matching that precedes conscious reasoning — which sounds Haidtian. But Haidt's elephant evolved in social groups with survival stakes. Can the same concept apply to a system with no stakes, no vulnerability, no survival?</p>
+          </div>
+        `
+      }
+    ],
     activityTitle: 'Claim Matcher',
     activityIcon: '🎯',
     activityDesc: 'For each philosophical claim, decide whether it belongs to Haidt, Nussbaum, or both. Select your answer for each claim, then check your results.',
@@ -1505,31 +1628,54 @@ const LEVELS = {
     imageAlt: 'Two philosophical figures in debate — the rationalist and the empiricist — with a glowing question between them',
     panelContext: 'This is synthesis level — students are building the full dialectical argument for their essay. Help them construct Nussbaum\'s precise reply to the JTB objection. Push for philosophical precision: can emotion-cognitions be justified? True? Belief-like? This is essay-preparation territory.',
     panelOpener: 'You\'ve built the case for Nussbaum. Now Plato\'s back with his strongest objection. Before you read it — what do you predict he\'ll say? And what\'s Nussbaum\'s best reply?',
-    content: `
-      <h2>The Dialectical Structure</h2>
-      <p>Your Issues Analysis essay requires argument → objection → reply. This final level gives you the full dialectical exchange you need to write on Prompts 2 or 3.</p>
+    pages: [
+      {
+        label: 'The Dialectical Structure',
+        html: `
+          <h3>The Dialectical Structure</h3>
+          <p>Your Issues Analysis essay requires argument → objection → reply. This final level gives you the full dialectical exchange you need to write on Prompts 2 or 3.</p>
 
-      <h3>Position: Nussbaum's Claim</h3>
-      <p>Emotions are not obstacles to knowledge but a form of epistemic access. As emotion-cognitions with propositional content, they can be accurate or inaccurate, justified or unjustified. Trained through literature and attentive practice, they give us reliable knowledge of human situations that detached analysis cannot access. The person without cultivated emotional perception is <em>blind</em> to real features of reality — detachment produces ignorance, not clarity.</p>
+          <h3>Position: Nussbaum's Claim</h3>
+          <p>Emotions are not obstacles to knowledge but a form of epistemic access. As emotion-cognitions with propositional content, they can be accurate or inaccurate, justified or unjustified. Trained through literature and attentive practice, they give us reliable knowledge of human situations that detached analysis cannot access. The person without cultivated emotional perception is <em>blind</em> to real features of reality — detachment produces ignorance, not clarity.</p>
+        `
+      },
+      {
+        label: 'Plato\'s Objection',
+        html: `
+          <h3>Objection: Plato's Reply</h3>
 
-      <h3>Objection: Plato's Reply</h3>
+          <div class="plato-objection">
+            <p class="voice-label">Plato's Objection</p>
+            <p>"What Nussbaum calls 'emotional knowledge' fails the standard test for genuine knowledge — justified true belief (JTB). Consider three problems:</p>
+            <p>First, emotional responses vary from person to person and culture to culture. My grief is not your grief; my compassion is not yours. If knowledge must be inter-subjectively valid — that is, capable of being shared and checked — then private emotional responses cannot constitute it.</p>
+            <p>Second, emotions cannot be rationally justified in the way beliefs can. I can give reasons for a mathematical claim; I cannot give reasons for my grief beyond 'I feel it.' Nussbaum has shown emotions involve thought, but she has not shown they can meet the justification requirement.</p>
+            <p>Third, and most damaging: even if some emotional responses are accurate, there is no reliable method for distinguishing the accurate ones from the distorted ones. How do I know whether my compassion is tracking real suffering or merely projecting my own anxieties? Without a method of verification, we do not have knowledge — we have belief, at best."</p>
+          </div>
+        `
+      },
+      {
+        label: 'Your Dialectical Task',
+        html: `
+          <h3>The Dialectical Task</h3>
+          <p>Plato has thrown three problems at Nussbaum: variability, justification, and verification. Each of them looks serious. Your job in the activity below is to identify which of three candidate replies Nussbaum could give is the <em>strongest</em>.</p>
 
-      <div class="plato-objection">
-        <p class="voice-label">Plato's Objection</p>
-        <p>"What Nussbaum calls 'emotional knowledge' fails the standard test for genuine knowledge — justified true belief (JTB). Consider three problems:</p>
-        <p>First, emotional responses vary from person to person and culture to culture. My grief is not your grief; my compassion is not yours. If knowledge must be inter-subjectively valid — that is, capable of being shared and checked — then private emotional responses cannot constitute it.</p>
-        <p>Second, emotions cannot be rationally justified in the way beliefs can. I can give reasons for a mathematical claim; I cannot give reasons for my grief beyond 'I feel it.' Nussbaum has shown emotions involve thought, but she has not shown they can meet the justification requirement.</p>
-        <p>Third, and most damaging: even if some emotional responses are accurate, there is no reliable method for distinguishing the accurate ones from the distorted ones. How do I know whether my compassion is tracking real suffering or merely projecting my own anxieties? Without a method of verification, we do not have knowledge — we have belief, at best."</p>
-      </div>
+          <p>You will then write a 100–150-word dialectical paragraph using the structure your essay requires:</p>
+          <ol>
+            <li>Nussbaum argues that…</li>
+            <li>Plato objects that…</li>
+            <li>However, Nussbaum can reply that…</li>
+            <li>Therefore… [synthesis: what does this debate reveal about the nature of knowledge?]</li>
+          </ol>
 
-      <h3>The Dialectical Task</h3>
-      <p>Below, you will assess three possible replies Nussbaum could make. Your task: identify the strongest one, and explain why.</p>
+          <p>The Socratic tutor on the right will read your paragraph and give feedback when you submit it.</p>
 
-      <div class="ai-probe">
-        <p class="probe-label">🤖 AI Probe</p>
-        <p>Plato's objection about verification applies doubly to AI: if an AI system produces an "emotional" response, we have no reliable method for checking whether it tracks anything real. Does this mean AI knowledge is structurally worse than human emotional knowledge — or does it show that Plato's verification problem applies to all knowledge, not just emotional knowledge?</p>
-      </div>
-    `,
+          <div class="ai-probe">
+            <p class="probe-label">🤖 AI Probe</p>
+            <p>Plato's objection about verification applies doubly to AI: if an AI system produces an "emotional" response, we have no reliable method for checking whether it tracks anything real. Does this mean AI knowledge is structurally worse than human emotional knowledge — or does it show that Plato's verification problem applies to all knowledge, not just emotional knowledge?</p>
+          </div>
+        `
+      }
+    ],
     activityTitle: 'Dialectical Exchange + Synthesis',
     activityIcon: '⚖',
     activityDesc: 'Part A: Select the strongest reply Nussbaum could make to Plato\'s objection. Part B: Write a 100–150 word synthesis paragraph using the dialectical structure your essay requires.',
@@ -1592,25 +1738,10 @@ function announce(msg) {
 }
 
 // ── Render level ─────────────────────────────────────────
-// Split a level's content HTML into discrete pages, breaking on
-// top-level <h2>/<h3> boundaries so each subsection becomes its own page.
-function paginateContent(html) {
-  const tmp = document.createElement('div');
-  tmp.innerHTML = html.trim();
-  const nodes = Array.from(tmp.children);
-  const pages = [];
-  let buf = [];
-  nodes.forEach(node => {
-    const tag = node.tagName.toLowerCase();
-    if ((tag === 'h2' || tag === 'h3') && buf.length > 0) {
-      pages.push(buf.join('\n'));
-      buf = [];
-    }
-    buf.push(node.outerHTML);
-  });
-  if (buf.length > 0) pages.push(buf.join('\n'));
-  return pages.length ? pages : [html];
-}
+// Each level defines a `pages` array of authored chunks, each with a
+// short noun-phrase `label` (shown in the within-level progress indicator)
+// and an `html` body. The activity is appended automatically as the
+// final page using the level's activityTitle as its label.
 
 function renderLevel(id) {
   const level = LEVELS[id];
@@ -1618,9 +1749,16 @@ function renderLevel(id) {
   currentLevel = id;
   currentPageIndex = 0;
 
-  // Build paginated content + activity as the final page
-  const contentPages = paginateContent(level.content).map(html => ({ type: 'content', html }));
-  currentPages = [...contentPages, { type: 'activity', level }];
+  // Build authored content pages + activity as the final page
+  const contentPages = (level.pages || []).map(p => ({
+    type: 'content',
+    label: p.label,
+    html: p.html
+  }));
+  currentPages = [
+    ...contentPages,
+    { type: 'activity', label: level.activityTitle, level }
+  ];
 
   // Update progress dots
   document.querySelectorAll('.progress-dot').forEach((dot, i) => {
@@ -1669,6 +1807,15 @@ function renderLevel(id) {
     <p class="level-subtitle">${level.subtitle}</p>
     <img class="level-image" src="${level.image}" alt="${level.imageAlt}" width="1200" height="280" loading="lazy">
 
+    <div class="page-progress" role="group" aria-label="Progress within this level">
+      <div class="page-progress-dots" id="page-progress-dots" role="tablist">
+        ${currentPages.map((p, i) => `<button class="page-dot" data-page="${i}" role="tab" aria-label="Jump to page ${i+1}: ${p.label}" type="button"></button>`).join('')}
+      </div>
+      <div class="page-progress-label">
+        <span id="page-progress-position">1</span> of ${currentPages.length} · <span class="page-label-current" id="page-progress-label">…</span>
+      </div>
+    </div>
+
     <div id="pages-wrapper">${pagesHtml}</div>
 
     <nav class="page-nav" id="page-nav" aria-label="Navigate within this level">
@@ -1701,6 +1848,14 @@ function renderLevel(id) {
   $('page-prev-btn').addEventListener('click', () => goToPage(currentPageIndex - 1));
   $('page-next-btn').addEventListener('click', () => goToPage(currentPageIndex + 1));
 
+  // Bind clickable page progress dots — let students jump to any page
+  document.querySelectorAll('.page-dot').forEach(dot => {
+    dot.addEventListener('click', () => {
+      const idx = parseInt(dot.dataset.page, 10);
+      goToPage(idx);
+    });
+  });
+
   // Init activity once now that its DOM exists
   initActivity(level);
 
@@ -1718,6 +1873,7 @@ function renderLevel(id) {
 function renderPage(isInitialEntry = false) {
   const total = currentPages.length;
   const isLast = currentPageIndex === total - 1;
+  const currentPage = currentPages[currentPageIndex];
 
   // Show only the current page (and re-trigger fade animation on it)
   document.querySelectorAll('#pages-wrapper .page-content').forEach(el => {
@@ -1732,34 +1888,38 @@ function renderPage(isInitialEntry = false) {
     }
   });
 
-  // Page indicator + button states
-  $('page-indicator').textContent = `Page ${currentPageIndex + 1} of ${total}`;
+  // Update within-level progress dots
+  document.querySelectorAll('.page-dot').forEach((dot, i) => {
+    dot.classList.remove('active', 'completed');
+    if (i === currentPageIndex) dot.classList.add('active');
+    else if (i < currentPageIndex) dot.classList.add('completed');
+  });
+
+  // Update progress label + page indicator
+  $('page-progress-position').textContent = String(currentPageIndex + 1);
+  $('page-progress-label').textContent = currentPage.label || '';
+  $('page-indicator').textContent = `${currentPageIndex + 1} of ${total} · ${currentPage.label || ''}`;
   $('page-prev-btn').disabled = currentPageIndex === 0;
 
-  const nextBtn = $('page-next-btn');
-  if (isLast) {
-    nextBtn.style.visibility = 'hidden';
-  } else {
-    nextBtn.style.visibility = 'visible';
-    const nextIsActivity = currentPages[currentPageIndex + 1].type === 'activity';
-    nextBtn.textContent = nextIsActivity ? 'Continue to activity →' : 'Next →';
+  // Hide page-nav on the last page (level-nav takes over instead)
+  $('page-nav').hidden = isLast;
+  if (!isLast) {
+    const nextPage = currentPages[currentPageIndex + 1];
+    $('page-next-btn').textContent = nextPage.type === 'activity'
+      ? `Continue to activity →`
+      : `Next: ${nextPage.label} →`;
   }
 
   // Show level-to-level nav only on the last (activity) page
   $('level-nav').hidden = !isLast;
 
-  // Scroll main content to top of the new page
+  // Scroll main content to top of the new page (don't auto-focus headings —
+  // it's jarring; the visible page change is enough orientation)
   document.querySelector('.main-content').scrollTop = 0;
 
-  // Move focus to the first heading on the newly shown page (skip on initial
-  // entry — the level title handles that for us).
+  // Announce page change to screen readers
   if (!isInitialEntry) {
-    const visible = document.querySelector(`#pages-wrapper .page-content[data-page-index="${currentPageIndex}"]`);
-    const target = visible && visible.querySelector('h2, h3');
-    if (target) {
-      target.setAttribute('tabindex', '-1');
-      setTimeout(() => target.focus(), 80);
-    }
+    announce(`Page ${currentPageIndex + 1} of ${total}: ${currentPage.label || ''}`);
   }
 }
 
