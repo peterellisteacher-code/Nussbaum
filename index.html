@@ -761,13 +761,13 @@ a:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
 }
 
 .panel-header {
-  padding: var(--space-md) var(--space-md) var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
   border-bottom: 1px solid rgba(255,255,255,0.1);
   flex-shrink: 0;
 }
 .panel-header h2 {
   font-family: var(--font-serif);
-  font-size: var(--text-lg);
+  font-size: var(--text-base);
   color: #fff;
   margin-bottom: 2px;
 }
@@ -775,16 +775,35 @@ a:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
   font-size: var(--text-sm);
   color: var(--amber-light);
   font-style: italic;
-  line-height: 1.4;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  cursor: pointer;
+  transition: -webkit-line-clamp 0.2s ease;
+}
+.panel-context.expanded {
+  -webkit-line-clamp: unset;
+  overflow: visible;
+}
+.panel-context::after {
+  content: " more ▾";
+  color: rgba(255,255,255,0.5);
+  font-style: normal;
+  font-size: 11px;
+}
+.panel-context.expanded::after {
+  content: " less ▴";
 }
 
 .chat-messages {
   flex: 1;
   overflow-y: auto;
-  padding: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
+  gap: var(--space-xs);
   scroll-behavior: smooth;
 }
 .chat-messages::-webkit-scrollbar { width: 4px; }
@@ -794,8 +813,8 @@ a:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
 .chat-msg {
   max-width: 92%;
   border-radius: var(--radius-md);
-  padding: var(--space-sm);
-  font-size: var(--text-base);
+  padding: var(--space-xs) var(--space-sm);
+  font-size: var(--text-sm);
   line-height: 1.5;
   animation: fadeUp 0.25s ease;
 }
@@ -867,10 +886,10 @@ a:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
   border: 1px solid rgba(255,255,255,0.2);
   border-radius: var(--radius-sm);
   color: #fff;
-  font-size: var(--text-base);
+  font-size: var(--text-sm);
   resize: none;
   line-height: 1.5;
-  min-height: 68px;
+  min-height: 56px;
   transition: var(--transition);
 }
 .chat-textarea::placeholder { color: rgba(255,255,255,0.4); }
@@ -1104,7 +1123,7 @@ a:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
   <aside class="socratic-panel" aria-label="Socratic Tutor">
     <div class="panel-header">
       <h2>Socratic Dialogue</h2>
-      <p class="panel-context" id="panel-context">Ask me anything about this level.</p>
+      <p class="panel-context" id="panel-context" role="button" tabindex="0" aria-label="Tutor focus for this level — click to expand or collapse">Ask me anything about this level.</p>
     </div>
 
     <div class="chat-messages" id="chat-messages" aria-live="polite" aria-label="Conversation, scrollable" tabindex="0" role="log">
@@ -2600,6 +2619,16 @@ async function sendMessage(text) {
     $('chat-textarea').focus();
   }
 }
+
+// Toggle panel-context expand/collapse on click or Enter/Space
+(function bindContextToggle() {
+  const ctx = $('panel-context');
+  const toggle = () => ctx.classList.toggle('expanded');
+  ctx.addEventListener('click', toggle);
+  ctx.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+  });
+})();
 
 // Chat form submit
 $('chat-form').addEventListener('submit', async e => {
